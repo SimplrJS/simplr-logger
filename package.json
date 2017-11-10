@@ -1,6 +1,6 @@
 {
   "name": "simplr-logger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple JavaScript logger written in TypeScript.",
   "main": "dist/simplr-logger.js",
   "types": "@types/index.d.ts",
