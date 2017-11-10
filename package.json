@@ -1,0 +1,45 @@
+{
+  "name": "simplr-logger",
+  "version": "0.0.1",
+  "description": "Simple JavaScript logger written in TypeScript.",
+  "main": "dist/simplr-logger.js",
+  "types": "@typs/index.d.ts",
+  "scripts": {
+    "test": "tsc -p . --noEmit && npm run tslint",
+    "tslint": "tslint --project . --config ./tslint.json",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "uglifyjs": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
+    "release": "npm run build && npm run uglifyjs",
+    "preversion": "npm run release",
+    "prepublishOnly": "npm run release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimplrJS/simplr-logger.git"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "logger",
+    "simplr",
+    "console"
+  ],
+  "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/SimplrJS)",
+  "contributors": [
+    "Giedrius Grabauskas <giedrius@quatrodev.com> (https://github.com/GiedriusGrabauskas)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SimplrJS/simplr-logger/issues"
+  },
+  "homepage": "https://github.com/SimplrJS/simplr-logger#readme",
+  "devDependencies": {
+    "simplr-tslint": "0.0.1",
+    "ts-loader": "^3.1.1",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1",
+    "uglify-js": "^3.1.8",
+    "webpack": "^3.8.1"
+  }
+}
