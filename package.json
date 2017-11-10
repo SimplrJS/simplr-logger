@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Simple JavaScript logger written in TypeScript.",
   "main": "dist/simplr-logger.js",
-  "types": "@typs/index.d.ts",
+  "types": "@types/index.d.ts",
   "scripts": {
     "test": "tsc -p . --noEmit && npm run tslint",
     "tslint": "tslint --project . --config ./tslint.json",
