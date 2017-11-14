@@ -149,7 +149,8 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
         return {
             WriteMessageHandler: undefined,
             LogLevel: log_level_1.LogLevel.Warning,
-            CustomLogLevels: false
+            CustomLogLevels: false,
+            Prefix: undefined
         };
     };
     /**
@@ -184,6 +185,15 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
         }
         this.configuration.LogLevel = logLevel;
         this.configuration.CustomLogLevels = true;
+        return this;
+    };
+    /**
+     * Set the first message in messages list.
+     *
+     * @param prefix Prefix string value.
+     */
+    LoggerConfigurationBuilder.prototype.SetPrefix = function (prefix) {
+        this.configuration.Prefix = prefix;
         return this;
     };
     /**
@@ -222,14 +232,16 @@ var helpers_1 = __webpack_require__(6);
 var message_handler_base_1 = __webpack_require__(3);
 var ConsoleMessageHandler = /** @class */ (function (_super) {
     __extends(ConsoleMessageHandler, _super);
-    function ConsoleMessageHandler(useShortPrefix) {
+    function ConsoleMessageHandler(useShortPrefix, useTimePrefix) {
         if (useShortPrefix === void 0) { useShortPrefix = true; }
+        if (useTimePrefix === void 0) { useTimePrefix = true; }
         var _this = _super.call(this) || this;
         _this.useShortPrefix = useShortPrefix;
+        _this.useTimePrefix = useTimePrefix;
         return _this;
     }
     ConsoleMessageHandler.prototype.HandleMessage = function (level, isEnabled, timestamp, messages) {
-        var usePrefix = true;
+        var useShortPrefix = this.useShortPrefix;
         var method;
         switch (level) {
             case log_level_1.LogLevel.None: {
@@ -254,7 +266,7 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             }
             case log_level_1.LogLevel.Trace: {
                 method = console.trace;
-                usePrefix = false;
+                useShortPrefix = false;
                 break;
             }
             default: {
@@ -266,8 +278,15 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
         if (method == null) {
             method = console.log;
         }
-        if (usePrefix) {
-            var prefixString = this.useShortPrefix ? helpers_1.Helpers.GetLogLevelShortString(level) : helpers_1.Helpers.GetLogLevelString(level);
+        var prefixList = [];
+        if (this.useTimePrefix) {
+            prefixList.push("" + new Date(timestamp).toLocaleTimeString());
+        }
+        if (useShortPrefix) {
+            prefixList.push(this.useShortPrefix ? helpers_1.Helpers.GetLogLevelShortString(level) : helpers_1.Helpers.GetLogLevelString(level));
+        }
+        if (prefixList.length > 0) {
+            var prefixString = prefixList.join(" ");
             method.apply(void 0, [prefixString + ":"].concat(messages));
         }
         else {
@@ -419,6 +438,9 @@ var LoggerBuilder = /** @class */ (function () {
         var timestamp = Date.now();
         var isEnabled = this.IsEnabled(level);
         if (isEnabled) {
+            if (this.configuration.Prefix) {
+                messages = [this.configuration.Prefix].concat(messages);
+            }
             this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
         }
         return timestamp;

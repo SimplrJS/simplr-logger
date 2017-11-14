@@ -4,6 +4,7 @@ export interface LoggerConfiguration {
     WriteMessageHandler: MessageHandlerBase;
     LogLevel: LogLevel;
     CustomLogLevels?: boolean;
+    Prefix?: string;
 }
 /**
  * Logger configuration builder.
@@ -30,6 +31,12 @@ export declare class LoggerConfigurationBuilder {
      * @param logLevels List of log level.
      */
     SetCustomLogLevels(logLevels: LogLevel[]): this;
+    /**
+     * Set the first message in messages list.
+     *
+     * @param prefix Prefix string value.
+     */
+    SetPrefix(prefix: string): this;
     /**
      * Build configuration result object.
      */
