@@ -6,6 +6,7 @@ export interface LoggerConfiguration {
     WriteMessageHandler: MessageHandlerBase;
     LogLevel: LogLevel;
     CustomLogLevels?: boolean;
+    Prefix?: string;
 }
 
 /**
@@ -25,7 +26,8 @@ export class LoggerConfigurationBuilder {
         return {
             WriteMessageHandler: undefined,
             LogLevel: LogLevel.Warning,
-            CustomLogLevels: false
+            CustomLogLevels: false,
+            Prefix: undefined
         };
     }
 
@@ -64,6 +66,17 @@ export class LoggerConfigurationBuilder {
         }
         this.configuration.LogLevel = logLevel;
         this.configuration.CustomLogLevels = true;
+
+        return this;
+    }
+
+    /**
+     * Set the first message in messages list.
+     * 
+     * @param prefix Prefix string value.
+     */
+    public SetPrefix(prefix: string): this {
+        this.configuration.Prefix = prefix;
 
         return this;
     }

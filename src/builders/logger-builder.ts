@@ -62,6 +62,10 @@ export class LoggerBuilder {
         const timestamp = Date.now();
         const isEnabled = this.IsEnabled(level);
         if (isEnabled) {
+            if (this.configuration.Prefix) {
+                messages = [this.configuration.Prefix].concat(messages);
+            }
+
             this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
         }
 
