@@ -283,7 +283,7 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             prefixList.push("" + new Date(timestamp).toLocaleTimeString());
         }
         if (useShortPrefix) {
-            prefixList.push(this.useShortPrefix ? helpers_1.Helpers.GetLogLevelShortString(level) : helpers_1.Helpers.GetLogLevelString(level));
+            prefixList.push("[" + (this.useShortPrefix ? helpers_1.Helpers.GetLogLevelShortString(level) : helpers_1.Helpers.GetLogLevelString(level)) + "]");
         }
         if (prefixList.length > 0) {
             var prefixString = prefixList.join(" ");
