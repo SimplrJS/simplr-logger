@@ -3,12 +3,12 @@ import { Helpers } from "../utils/helpers";
 import { MessageHandlerBase } from "../abstractions/message-handler-base";
 
 export class ConsoleMessageHandler extends MessageHandlerBase {
-    constructor(private useShortPrefix: boolean = true) {
+    constructor(private useShortPrefix: boolean = true, private useTimePrefix: boolean = true) {
         super();
     }
 
     public HandleMessage(level: LogLevel, isEnabled: boolean, timestamp: number, messages: any[]): void {
-        let usePrefix: boolean = true;
+        let useShortPrefix: boolean = this.useShortPrefix;
         let method;
 
         switch (level) {
@@ -34,7 +34,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
             }
             case LogLevel.Trace: {
                 method = console.trace;
-                usePrefix = false;
+                useShortPrefix = false;
                 break;
             }
             default: {
@@ -48,8 +48,16 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
             method = console.log;
         }
 
-        if (usePrefix) {
-            const prefixString = this.useShortPrefix ? Helpers.GetLogLevelShortString(level) : Helpers.GetLogLevelString(level);
+        let prefixList: string[] = [];
+        if (this.useTimePrefix) {
+            prefixList.push(`${new Date(timestamp).toLocaleTimeString()}`);
+        }
+        if (useShortPrefix) {
+            prefixList.push(this.useShortPrefix ? Helpers.GetLogLevelShortString(level) : Helpers.GetLogLevelString(level));
+        }
+
+        if (prefixList.length > 0) {
+            const prefixString = prefixList.join(" ");
             method(`${prefixString}:`, ...messages);
         } else {
             method(...messages);
