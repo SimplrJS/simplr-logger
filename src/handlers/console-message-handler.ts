@@ -48,7 +48,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
             method = console.log;
         }
 
-        let prefixList: string[] = [];
+        const prefixList: string[] = [];
         if (this.useTimePrefix) {
             prefixList.push(`${new Date(timestamp).toLocaleTimeString()}`);
         }

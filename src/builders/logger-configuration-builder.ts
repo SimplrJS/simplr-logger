@@ -72,7 +72,7 @@ export class LoggerConfigurationBuilder {
 
     /**
      * Set the first message in messages list.
-     * 
+     *
      * @param prefix Prefix string value.
      */
     public SetPrefix(prefix: string): this {
