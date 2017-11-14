@@ -53,7 +53,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
             prefixList.push(`${new Date(timestamp).toLocaleTimeString()}`);
         }
         if (useShortPrefix) {
-            prefixList.push(this.useShortPrefix ? Helpers.GetLogLevelShortString(level) : Helpers.GetLogLevelString(level));
+            prefixList.push(`[${this.useShortPrefix ? Helpers.GetLogLevelShortString(level) : Helpers.GetLogLevelString(level)}]`);
         }
 
         if (prefixList.length > 0) {
