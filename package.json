@@ -18,6 +18,11 @@
     "type": "git",
     "url": "git+https://github.com/SimplrJS/simplr-logger.git"
   },
+  "files": [
+    "dist",
+    "@types",
+    "*.MD"
+  ],
   "keywords": [
     "typescript",
     "javascript",
