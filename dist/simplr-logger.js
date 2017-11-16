@@ -226,38 +226,80 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var log_level_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(6);
+var ansi_color_codes_1 = __webpack_require__(7);
 var message_handler_base_1 = __webpack_require__(3);
 var ConsoleMessageHandler = /** @class */ (function (_super) {
     __extends(ConsoleMessageHandler, _super);
-    function ConsoleMessageHandler(useShortPrefix, useTimePrefix) {
-        if (useShortPrefix === void 0) { useShortPrefix = true; }
-        if (useTimePrefix === void 0) { useTimePrefix = true; }
+    function ConsoleMessageHandler(configuration) {
         var _this = _super.call(this) || this;
-        _this.useShortPrefix = useShortPrefix;
-        _this.useTimePrefix = useTimePrefix;
+        _this.defaultConfiguration = {
+            LogLevelPrefix: ConsoleMessageHandler.PrefixTypes.short,
+            TimePrefix: ConsoleMessageHandler.PrefixTypes.short,
+            UseColors: typeof window === "undefined"
+        };
+        _this.configuration = __assign({}, _this.defaultConfiguration, configuration);
         return _this;
     }
+    ConsoleMessageHandler.prototype.resolveTimePrefix = function (timestamp) {
+        switch (this.configuration.TimePrefix) {
+            case ConsoleMessageHandler.PrefixTypes.none:
+                return undefined;
+            case ConsoleMessageHandler.PrefixTypes.short:
+                return "[" + new Date(timestamp).toLocaleTimeString() + "]";
+            case ConsoleMessageHandler.PrefixTypes.full:
+                return "[" + new Date(timestamp).toLocaleString() + "]";
+        }
+    };
+    ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorStart) {
+        if (level === log_level_1.LogLevel.Trace) {
+            return undefined;
+        }
+        var startString = this.configuration.UseColors ? colorStart : "";
+        switch (this.configuration.LogLevelPrefix) {
+            case ConsoleMessageHandler.PrefixTypes.none:
+                return undefined;
+            case ConsoleMessageHandler.PrefixTypes.short:
+                return "" + startString + helpers_1.Helpers.GetLogLevelShortString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
+            case ConsoleMessageHandler.PrefixTypes.full:
+                return "" + startString + helpers_1.Helpers.GetLogLevelString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
+        }
+    };
     ConsoleMessageHandler.prototype.HandleMessage = function (level, isEnabled, timestamp, messages) {
-        var useShortPrefix = this.useShortPrefix;
         var method;
+        var colorStart = "";
         switch (level) {
             case log_level_1.LogLevel.None: {
                 return;
             }
-            case log_level_1.LogLevel.Critical:
+            case log_level_1.LogLevel.Critical: {
+                method = console.error;
+                colorStart += ansi_color_codes_1.ANSIColorCodes.Bright + ansi_color_codes_1.ANSIColorCodes.FgWhite + ansi_color_codes_1.ANSIColorCodes.BgRed;
+                break;
+            }
             case log_level_1.LogLevel.Error: {
                 method = console.error;
+                colorStart += ansi_color_codes_1.ANSIColorCodes.FgBlack + ansi_color_codes_1.ANSIColorCodes.BgRed;
                 break;
             }
             case log_level_1.LogLevel.Information: {
                 method = console.info;
+                colorStart += ansi_color_codes_1.ANSIColorCodes.FgGreen;
                 break;
             }
             case log_level_1.LogLevel.Warning: {
                 method = console.warn;
+                colorStart += ansi_color_codes_1.ANSIColorCodes.Bright + ansi_color_codes_1.ANSIColorCodes.FgYellow;
                 break;
             }
             case log_level_1.LogLevel.Debug: {
@@ -266,24 +308,22 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             }
             case log_level_1.LogLevel.Trace: {
                 method = console.trace;
-                useShortPrefix = false;
                 break;
             }
             default: {
+                // Fallback to console.log method
                 method = console.log;
                 break;
             }
         }
-        // Fallback to console.log method
-        if (method == null) {
-            method = console.log;
-        }
         var prefixList = [];
-        if (this.useTimePrefix) {
-            prefixList.push("" + new Date(timestamp).toLocaleTimeString());
+        var timePrefix = this.resolveTimePrefix(timestamp);
+        if (timePrefix != null) {
+            prefixList.push(timePrefix);
         }
-        if (useShortPrefix) {
-            prefixList.push("[" + (this.useShortPrefix ? helpers_1.Helpers.GetLogLevelShortString(level) : helpers_1.Helpers.GetLogLevelString(level)) + "]");
+        var logLevelPrefix = this.resolveLogLevelPrefix(level, colorStart);
+        if (logLevelPrefix != null) {
+            prefixList.push(logLevelPrefix);
         }
         if (prefixList.length > 0) {
             var prefixString = prefixList.join(" ");
@@ -295,6 +335,15 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
     };
     return ConsoleMessageHandler;
 }(message_handler_base_1.MessageHandlerBase));
+exports.ConsoleMessageHandler = ConsoleMessageHandler;
+(function (ConsoleMessageHandler) {
+    var PrefixTypes;
+    (function (PrefixTypes) {
+        PrefixTypes["none"] = "none";
+        PrefixTypes["short"] = "short";
+        PrefixTypes["full"] = "full";
+    })(PrefixTypes = ConsoleMessageHandler.PrefixTypes || (ConsoleMessageHandler.PrefixTypes = {}));
+})(ConsoleMessageHandler = exports.ConsoleMessageHandler || (exports.ConsoleMessageHandler = {}));
 exports.ConsoleMessageHandler = ConsoleMessageHandler;
 
 
@@ -328,7 +377,7 @@ var log_level_1 = __webpack_require__(0);
 exports.LogLevel = log_level_1.LogLevel;
 var message_handler_base_1 = __webpack_require__(3);
 exports.MessageHandlerBase = message_handler_base_1.MessageHandlerBase;
-var Handlers = __webpack_require__(7);
+var Handlers = __webpack_require__(8);
 exports.Handlers = Handlers;
 
 
@@ -491,6 +540,41 @@ exports.Helpers = new HelpersBuilder();
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ANSIColorCodes;
+(function (ANSIColorCodes) {
+    ANSIColorCodes["Reset"] = "\u001B[0m";
+    ANSIColorCodes["Bright"] = "\u001B[1m";
+    ANSIColorCodes["Dim"] = "\u001B[2m";
+    ANSIColorCodes["Underscore"] = "\u001B[4m";
+    ANSIColorCodes["Blink"] = "\u001B[5m";
+    ANSIColorCodes["Reverse"] = "\u001B[7m";
+    ANSIColorCodes["Hidden"] = "\u001B[8m";
+    ANSIColorCodes["FgBlack"] = "\u001B[30m";
+    ANSIColorCodes["FgRed"] = "\u001B[31m";
+    ANSIColorCodes["FgGreen"] = "\u001B[32m";
+    ANSIColorCodes["FgYellow"] = "\u001B[33m";
+    ANSIColorCodes["FgBlue"] = "\u001B[34m";
+    ANSIColorCodes["FgMagenta"] = "\u001B[35m";
+    ANSIColorCodes["FgCyan"] = "\u001B[36m";
+    ANSIColorCodes["FgWhite"] = "\u001B[37m";
+    ANSIColorCodes["BgBlack"] = "\u001B[40m";
+    ANSIColorCodes["BgRed"] = "\u001B[41m";
+    ANSIColorCodes["BgGreen"] = "\u001B[42m";
+    ANSIColorCodes["BgYellow"] = "\u001B[43m";
+    ANSIColorCodes["BgBlue"] = "\u001B[44m";
+    ANSIColorCodes["BgMagenta"] = "\u001B[45m";
+    ANSIColorCodes["BgCyan"] = "\u001B[46m";
+    ANSIColorCodes["BgWhite"] = "\u001B[47m";
+})(ANSIColorCodes = exports.ANSIColorCodes || (exports.ANSIColorCodes = {}));
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

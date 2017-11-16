@@ -10,14 +10,21 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "uglifyjs": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
+    "prerelease": "npm run clear",
     "release": "npm run build && npm run uglifyjs",
     "preversion": "npm run release",
-    "prepublishOnly": "npm run release"
+    "prepublishOnly": "npm run release",
+    "clear": "rimraf @types & rimraf dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SimplrJS/simplr-logger.git"
   },
+  "files": [
+    "dist",
+    "@types",
+    "*.MD"
+  ],
   "keywords": [
     "typescript",
     "javascript",
