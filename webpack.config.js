@@ -17,5 +17,9 @@ module.exports = {
     resolve: {
         extensions: [".ts"]
     },
-    externals: {}
+    externals: {
+        "os": "os",
+        "path": "path",
+        "fs": "fs"
+    }
 };
