@@ -3,7 +3,7 @@ import { LogLevel } from "../abstractions/log-level";
 import { ConsoleMessageHandler } from "../handlers/console-message-handler";
 
 export interface LoggerConfiguration {
-    WriteMessageHandler: MessageHandlerBase;
+    WriteMessageHandler: MessageHandlerBase[];
     LogLevel: LogLevel;
     CustomLogLevels?: boolean;
     Prefix?: string;
@@ -37,7 +37,21 @@ export class LoggerConfigurationBuilder {
      * @param handler Log messages handler.
      */
     public SetWriteMessageHandler(handler: MessageHandlerBase): this {
-        this.configuration.WriteMessageHandler = handler;
+        this.configuration.WriteMessageHandler = [handler];
+
+        return this;
+    }
+
+    /**
+     * Add write message handlers
+     *
+     * @param handlers Log messages handlers list.
+     */
+    public AddWriteMessageHandler(handlers: MessageHandlerBase[]): this {
+        if (this.configuration.WriteMessageHandler == null) {
+            this.configuration.WriteMessageHandler = handlers;
+        }
+        this.configuration.WriteMessageHandler = this.configuration.WriteMessageHandler.concat(handlers);
 
         return this;
     }

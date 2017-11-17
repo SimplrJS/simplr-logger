@@ -1,7 +1,7 @@
 import { MessageHandlerBase } from "../abstractions/message-handler-base";
 import { LogLevel } from "../abstractions/log-level";
 export interface LoggerConfiguration {
-    WriteMessageHandler: MessageHandlerBase;
+    WriteMessageHandler: MessageHandlerBase[];
     LogLevel: LogLevel;
     CustomLogLevels?: boolean;
     Prefix?: string;
@@ -19,6 +19,12 @@ export declare class LoggerConfigurationBuilder {
      * @param handler Log messages handler.
      */
     SetWriteMessageHandler(handler: MessageHandlerBase): this;
+    /**
+     * Add write message handlers
+     *
+     * @param handlers Log messages handlers list.
+     */
+    AddWriteMessageHandler(handlers: MessageHandlerBase[]): this;
     /**
      * Set log level.
      *

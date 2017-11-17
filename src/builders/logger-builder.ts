@@ -66,7 +66,9 @@ export class LoggerBuilder {
                 messages = [this.configuration.Prefix].concat(messages);
             }
 
-            this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
+            for (const handler of this.configuration.WriteMessageHandler) {
+                handler.HandleMessage(level, isEnabled, timestamp, messages);
+            }
         }
 
         return timestamp;
