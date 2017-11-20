@@ -1,0 +1,21 @@
+{
+  "name": "copy-handlers",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Fix import from `simplr-logger/handlers`.",
+  "main": "copy-handlers.ts",
+  "scripts": {
+    "copy": "ts-node copy-handlers.ts"
+  },
+  "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/SimplrJS)",
+  "contributors": [
+    "Giedrius Grabauskas <giedrius@quatrodev.com> (https://github.com/GiedriusGrabauskas)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@types/fs-extra": "^4.0.5",
+    "fs-extra": "^4.0.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
+  }
+}

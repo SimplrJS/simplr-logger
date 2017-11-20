@@ -1,5 +1,4 @@
-import { LoggerConfigurationBuilder, LoggerConfiguration } from "./logger-configuration-builder";
-import { LogLevel } from "../abstractions/log-level";
+import { LogLevel, LoggerConfigurationBuilder, LoggerConfiguration } from "simplr-logger";
 
 export class LoggerBuilder {
     constructor(private configuration: LoggerConfiguration = new LoggerConfigurationBuilder().Build()) { }
@@ -66,7 +65,16 @@ export class LoggerBuilder {
                 messages = [this.configuration.Prefix].concat(messages);
             }
 
-            this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
+            /**
+             * @deprecated
+             */
+            if (this.configuration.WriteMessageHandler != null) {
+                this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
+            }
+
+            for (const handler of this.configuration.WriteMessageHandlers) {
+                handler.HandleMessage(level, isEnabled, timestamp, messages);
+            }
         }
 
         return timestamp;

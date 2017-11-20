@@ -1,17 +1,24 @@
 {
   "name": "simplr-logger",
-  "version": "0.3.0",
-  "description": "Simple JavaScript logger written in TypeScript.",
-  "main": "dist/simplr-logger.js",
+  "version": "0.4.0-alpha.6",
+  "description": "Simple JavaScript logger written in TypeScript that can be used in browser or node application.",
+  "main": "./dist/simplr-logger.js",
+  "directories": {
+    "lib": "./dist"
+  },
   "types": "@types/index.d.ts",
   "scripts": {
     "test": "tsc -p . --noEmit && npm run tslint",
     "tslint": "tslint --project . --config ./tslint.json",
     "build": "webpack",
+    "postbuild": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
+    "build-handlers": "webpack --config webpack.handlers-config.js",
+    "postbuild-handlers": "uglifyjs ./dist/simplr-logger-handlers.js -o ./dist/simplr-logger-handlers.min.js --compress --mangle",
+    "precopy-handlers": "rimraf ./handlers.js && rimraf ./handlers.d.ts",
+    "copy-handlers": "rimraf @types && tsc -p . --outDir _dist_temp && cd scripts/copy-handlers && npm run copy",
     "watch": "webpack --watch",
-    "uglifyjs": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
     "prerelease": "npm run clear",
-    "release": "npm run build && npm run uglifyjs",
+    "release": "npm run build && npm run build-handlers && npm run copy-handlers",
     "preversion": "npm run release",
     "prepublishOnly": "npm run release",
     "clear": "rimraf @types & rimraf dist"
@@ -23,14 +30,19 @@
   "files": [
     "dist",
     "@types",
-    "*.MD"
+    "*.MD",
+    "*.js",
+    "*.d.ts",
+    "!*config.js"
   ],
   "keywords": [
     "typescript",
     "javascript",
     "logger",
     "simplr",
-    "console"
+    "console",
+    "node",
+    "file-system"
   ],
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/SimplrJS)",
   "contributors": [
@@ -42,11 +54,16 @@
   },
   "homepage": "https://github.com/SimplrJS/simplr-logger#readme",
   "devDependencies": {
+    "@types/node": "^8.0.53",
+    "rimraf": "^2.6.2",
     "simplr-tslint": "0.0.1",
     "ts-loader": "^3.1.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
     "uglify-js": "^3.1.9",
     "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "tslib": "^1.8.0"
   }
 }

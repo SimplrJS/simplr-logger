@@ -1,9 +1,11 @@
-import { MessageHandlerBase } from "../abstractions/message-handler-base";
-import { LogLevel } from "../abstractions/log-level";
-import { ConsoleMessageHandler } from "../handlers/console-message-handler";
+import { LogLevel, ConsoleMessageHandler, MessageHandlerBase } from "simplr-logger";
 
 export interface LoggerConfiguration {
-    WriteMessageHandler: MessageHandlerBase;
+    /**
+     * @deprecated Use WriteMessageHandlers instead.
+     */
+    WriteMessageHandler?: MessageHandlerBase;
+    WriteMessageHandlers: MessageHandlerBase[];
     LogLevel: LogLevel;
     CustomLogLevels?: boolean;
     Prefix?: string;
@@ -25,6 +27,7 @@ export class LoggerConfigurationBuilder {
     private defaultConfiguration(): Partial<LoggerConfiguration> {
         return {
             WriteMessageHandler: undefined,
+            WriteMessageHandlers: undefined,
             LogLevel: LogLevel.Warning,
             CustomLogLevels: false,
             Prefix: undefined
@@ -35,9 +38,35 @@ export class LoggerConfigurationBuilder {
      * Set custom message handler.
      *
      * @param handler Log messages handler.
+     * @deprecated Use AddWriteMessageHandlers instead.
      */
     public SetWriteMessageHandler(handler: MessageHandlerBase): this {
         this.configuration.WriteMessageHandler = handler;
+
+        return this;
+    }
+
+    /**
+     * Add write message handler.
+     *
+     * @param handler Log messages handler.
+     */
+    public AddWriteMessageHandler(handlers: MessageHandlerBase): this {
+        this.AddWriteMessageHandlers([handlers]);
+
+        return this;
+    }
+
+    /**
+     * Add write message handlers.
+     *
+     * @param handlers Log messages handlers list.
+     */
+    public AddWriteMessageHandlers(handlers: MessageHandlerBase[]): this {
+        if (this.configuration.WriteMessageHandlers == null) {
+            this.configuration.WriteMessageHandlers = handlers;
+        }
+        this.configuration.WriteMessageHandlers = this.configuration.WriteMessageHandlers.concat(handlers);
 
         return this;
     }
@@ -85,8 +114,8 @@ export class LoggerConfigurationBuilder {
      * Build configuration result object.
      */
     public Build(): LoggerConfiguration {
-        if (this.configuration.WriteMessageHandler == null) {
-            this.SetWriteMessageHandler(new ConsoleMessageHandler());
+        if (this.configuration.WriteMessageHandler == null && this.configuration.WriteMessageHandlers == null) {
+            this.AddWriteMessageHandlers([new ConsoleMessageHandler()]);
         }
 
         return this.configuration;

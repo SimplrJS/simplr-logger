@@ -1,5 +1,4 @@
-import { LoggerConfiguration } from "./logger-configuration-builder";
-import { LogLevel } from "../abstractions/log-level";
+import { LogLevel, LoggerConfiguration } from "simplr-logger";
 export declare class LoggerBuilder {
     private configuration;
     constructor(configuration?: LoggerConfiguration);

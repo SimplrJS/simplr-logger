@@ -1,7 +1,11 @@
+var path = require("path");
+
 module.exports = {
-    entry: "./src/index.ts",
+    entry: {
+        "simplr-logger": "./src/index.ts"
+    },
     output: {
-        filename: "./dist/simplr-logger.js",
+        filename: "./dist/[name].js",
         libraryTarget: "umd"
     },
     module: {
@@ -14,8 +18,14 @@ module.exports = {
             }
         ]
     },
+
     resolve: {
-        extensions: [".ts"]
+        extensions: [".ts"],
+        alias: {
+            "simplr-logger": path.resolve(__dirname, "./src/index.ts")
+        }
     },
-    externals: {}
+    externals: {
+        "tslib": "commonjs tslib"
+    }
 };

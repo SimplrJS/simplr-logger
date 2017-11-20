@@ -1,6 +1,6 @@
 # Simplr Logger
 
-Simple JavaScript logger written in [TypeScript](http://typescriptlang.org).
+Simple JavaScript logger written in [TypeScript](http://typescriptlang.org) that can be used in browser or node application.
 
 The package is most useful when used with [TypeScript](http://typescriptlang.org).
 
@@ -24,9 +24,11 @@ const logger = new LoggerBuilder();
 
 ```ts
 import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel } from "simplr-logger";
+import { FileMessageHandler, ConsoleMessageHandler } from "simplr-logger/handlers";
 
 const config = new LoggerConfigurationBuilder()
     .SetLogLevel(LogLevel.Trace)
+    .AddWriteMessageHandlers([new ConsoleMessageHandler(), new FileMessageHandler("./logs.txt")])
     .Build();
 
 const logger = new LoggerBuilder(config);
@@ -35,11 +37,11 @@ const logger = new LoggerBuilder(config);
 #### With simple object
 
 ```ts
-import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel, Handlers } from "simplr-logger";
+import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel, ConsoleMessageHandler } from "simplr-logger";
 
 const logger = new LoggerBuilder({
     LogLevel: LogLevel.Trace,
-    WriteMessageHandler: new Handlers.ConsoleMessageHandler()
+    WriteMessageHandlers: [new ConsoleMessageHandler()]
 });
 ```
 
