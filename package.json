@@ -14,9 +14,11 @@
     "postbuild": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
     "build-handlers": "webpack --config webpack.handlers-config.js",
     "postbuild-handlers": "uglifyjs ./dist/simplr-logger-handlers.js -o ./dist/simplr-logger-handlers.min.js --compress --mangle",
+    "precopy-handlers": "rimraf ./handlers.js && rimraf ./handlers.d.ts",
+    "copy-handlers": "rimraf @types && tsc -p . --outDir _dist_temp && cd scripts/copy-handlers && npm run copy",
     "watch": "webpack --watch",
     "prerelease": "npm run clear",
-    "release": "npm run build && npm run build-handlers",
+    "release": "npm run build && npm run build-handlers && npm run copy-handlers",
     "preversion": "npm run release",
     "prepublishOnly": "npm run release",
     "clear": "rimraf @types & rimraf dist"
