@@ -1,6 +1,6 @@
 # Simplr Logger
 
-Simple JavaScript logger written in [TypeScript](http://typescriptlang.org). It's can be used in browser or node application.
+Simple JavaScript logger written in [TypeScript](http://typescriptlang.org) that can be used in browser or node application.
 
 The package is most useful when used with [TypeScript](http://typescriptlang.org).
 
