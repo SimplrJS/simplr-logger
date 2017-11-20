@@ -249,7 +249,7 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
      * Set custom message handler.
      *
      * @param handler Log messages handler.
-     * @deprecated Use instead AddWriteMessageHandlers.
+     * @deprecated Use AddWriteMessageHandlers instead.
      */
     LoggerConfigurationBuilder.prototype.SetWriteMessageHandler = function (handler) {
         this.configuration.WriteMessageHandler = handler;

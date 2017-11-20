@@ -1,5 +1,8 @@
 import { LogLevel, MessageHandlerBase } from "simplr-logger";
 export interface LoggerConfiguration {
+    /**
+     * @deprecated Use WriteMessageHandlers instead.
+     */
     WriteMessageHandler?: MessageHandlerBase;
     WriteMessageHandlers: MessageHandlerBase[];
     LogLevel: LogLevel;
@@ -17,7 +20,7 @@ export declare class LoggerConfigurationBuilder {
      * Set custom message handler.
      *
      * @param handler Log messages handler.
-     * @deprecated Use instead AddWriteMessageHandlers.
+     * @deprecated Use AddWriteMessageHandlers instead.
      */
     SetWriteMessageHandler(handler: MessageHandlerBase): this;
     /**
