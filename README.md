@@ -35,11 +35,11 @@ const logger = new LoggerBuilder(config);
 #### With simple object
 
 ```ts
-import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel, Handlers } from "simplr-logger";
+import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel, ConsoleMessageHandler } from "simplr-logger";
 
 const logger = new LoggerBuilder({
     LogLevel: LogLevel.Trace,
-    WriteMessageHandler: new Handlers.ConsoleMessageHandler()
+    WriteMessageHandlers: [new ConsoleMessageHandler()]
 });
 ```
 
