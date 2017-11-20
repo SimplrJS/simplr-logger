@@ -129,6 +129,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
     function FileMessageHandler(filePathName, isServerSide) {
         var _this = _super.call(this) || this;
         _this.isServerSide = isServerSide;
+        // IMPORTANT: The value must be changed after files structure were updated!
         _this.handleMessageStackCount = 4;
         if (_this.isServerSide == null) {
             try {

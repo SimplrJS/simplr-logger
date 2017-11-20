@@ -29,6 +29,7 @@ export class FileMessageHandler extends MessageHandlerBase {
     }
     private filePathName: string;
 
+    // IMPORTANT: The value must be changed after files structure were updated!
     private readonly handleMessageStackCount: number = 4;
 
     public HandleMessage(level: LogLevel, isLevelEnabled: boolean, timestamp: number, messages: any[]): void {
