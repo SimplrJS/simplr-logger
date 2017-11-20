@@ -1,4 +1,4 @@
-import { LogLevel } from "../abstractions/log-level";
+import { LogLevel } from "simplr-logger";
 
 export class HelpersBuilder {
     public GetLogLevelShortString(level: LogLevel): string {

@@ -1,7 +1,5 @@
-import { LogLevel } from "../abstractions/log-level";
-import { Helpers } from "../utils/helpers";
 import { ANSIColorCodes } from "../utils/ansi-color-codes";
-import { MessageHandlerBase } from "../abstractions/message-handler-base";
+import { MessageHandlerBase, LoggerHelpers, LogLevel } from "simplr-logger";
 
 export class ConsoleMessageHandler extends MessageHandlerBase {
     constructor(configuration?: Partial<ConsoleMessageHandler.Configuration>) {
@@ -43,9 +41,9 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
             case ConsoleMessageHandler.PrefixTypes.none:
                 return undefined;
             case ConsoleMessageHandler.PrefixTypes.short:
-                return `${startString}${Helpers.GetLogLevelShortString(level)}${ANSIColorCodes.Reset}`;
+                return `${startString}${LoggerHelpers.GetLogLevelShortString(level)}${ANSIColorCodes.Reset}`;
             case ConsoleMessageHandler.PrefixTypes.full:
-                return `${startString}${Helpers.GetLogLevelString(level)}${ANSIColorCodes.Reset}`;
+                return `${startString}${LoggerHelpers.GetLogLevelString(level)}${ANSIColorCodes.Reset}`;
         }
 
     }

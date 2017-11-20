@@ -1,5 +1,4 @@
-import { LogLevel } from "../abstractions/log-level";
-import { MessageHandlerBase } from "../abstractions/message-handler-base";
+import { MessageHandlerBase, LogLevel } from "simplr-logger";
 export declare class ConsoleMessageHandler extends MessageHandlerBase {
     constructor(configuration?: Partial<ConsoleMessageHandler.Configuration>);
     private configuration;
