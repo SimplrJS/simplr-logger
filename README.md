@@ -24,11 +24,11 @@ const logger = new LoggerBuilder();
 
 ```ts
 import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel } from "simplr-logger";
-import { FileMessageHandler } from "simplr-logger/handlers";
+import { FileMessageHandler, ConsoleMessageHandler } from "simplr-logger/handlers";
 
 const config = new LoggerConfigurationBuilder()
     .SetLogLevel(LogLevel.Trace)
-    .AddWriteMessageHandlers([new FileMessageHandler("./logs.txt")])
+    .AddWriteMessageHandlers([new ConsoleMessageHandler(), new FileMessageHandler("./logs.txt")])
     .Build();
 
 const logger = new LoggerBuilder(config);
