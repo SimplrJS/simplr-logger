@@ -40,7 +40,9 @@
     "javascript",
     "logger",
     "simplr",
-    "console"
+    "console",
+    "node",
+    "file-system"
   ],
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/SimplrJS)",
   "contributors": [
