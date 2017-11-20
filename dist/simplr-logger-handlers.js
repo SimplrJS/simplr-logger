@@ -70,45 +70,60 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("simplr-logger");
+module.exports = require("tslib");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("simplr-logger");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = require("path");
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-Object.defineProperty(exports, "__esModule", { value: true });
-var simplr_logger_1 = __webpack_require__(0);
-exports.ConsoleMessageHandler = simplr_logger_1.ConsoleMessageHandler;
-var file_message_handler_1 = __webpack_require__(4);
-exports.FileMessageHandler = file_message_handler_1.FileMessageHandler;
-
+module.exports = require("fs");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(5);
-var simplr_logger_1 = __webpack_require__(0);
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(5), exports);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var simplr_logger_1 = __webpack_require__(1);
+exports.ConsoleMessageHandler = simplr_logger_1.ConsoleMessageHandler;
+var file_message_handler_1 = __webpack_require__(6);
+exports.FileMessageHandler = file_message_handler_1.FileMessageHandler;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+var simplr_logger_1 = __webpack_require__(1);
 var FileMessageHandler = /** @class */ (function (_super) {
     tslib_1.__extends(FileMessageHandler, _super);
     function FileMessageHandler(filePathName, isServerSide) {
@@ -118,7 +133,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
         if (_this.isServerSide == null) {
             try {
                 // tslint:disable-next-line:no-require-imports no-unused-expression
-                __webpack_require__(6);
+                __webpack_require__(7);
                 _this.isServerSide = true;
             }
             catch (_a) {
@@ -127,7 +142,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
         }
         if (_this.isServerSide) {
             // tslint:disable-next-line:no-require-imports
-            var normalize = __webpack_require__(1).normalize;
+            var normalize = __webpack_require__(2).normalize;
             _this.filePathName = normalize(filePathName);
             _this.ensureDirectory();
         }
@@ -173,7 +188,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
             return this.writeStream;
         }
         // tslint:disable-next-line:no-require-imports
-        var fs = __webpack_require__(2);
+        var fs = __webpack_require__(3);
         this.writeStream = fs.createWriteStream(this.filePathName, { flags: "a" });
         this.writeStream.on("close", function () {
             _this.writeStream = undefined;
@@ -186,7 +201,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
     Object.defineProperty(FileMessageHandler.prototype, "EOL", {
         get: function () {
             // tslint:disable-next-line:no-require-imports
-            var EOL = __webpack_require__(7).EOL;
+            var EOL = __webpack_require__(8).EOL;
             return EOL;
         },
         enumerable: true,
@@ -194,9 +209,9 @@ var FileMessageHandler = /** @class */ (function (_super) {
     });
     FileMessageHandler.prototype.ensureDirectory = function () {
         // tslint:disable-next-line:no-require-imports
-        var path = __webpack_require__(1);
+        var path = __webpack_require__(2);
         // tslint:disable-next-line:no-require-imports
-        var fs = __webpack_require__(2);
+        var fs = __webpack_require__(3);
         var dir = path.dirname(this.filePathName);
         var dirList = dir.split(path.sep);
         var targetDir = (dir[0] !== path.sep && path.isAbsolute(dir)) ? "" : process.cwd();
@@ -214,19 +229,13 @@ exports.FileMessageHandler = FileMessageHandler;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("tslib");
-
-/***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("process");
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");
