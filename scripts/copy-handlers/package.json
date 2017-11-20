@@ -2,7 +2,7 @@
   "name": "copy-handlers",
   "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "Fix import from `simplr-logger/handlers`.",
   "main": "copy-handlers.ts",
   "scripts": {
     "copy": "ts-node copy-handlers.ts"
