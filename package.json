@@ -1,7 +1,7 @@
 {
   "name": "simplr-logger",
   "version": "0.4.0-alpha.6",
-  "description": "Simple JavaScript logger written in TypeScript.",
+  "description": "Simple JavaScript logger written in TypeScript. It's can be used in browser or node application.",
   "main": "./dist/simplr-logger.js",
   "directories": {
     "lib": "./dist"

@@ -4,7 +4,6 @@ Simple JavaScript logger written in [TypeScript](http://typescriptlang.org). It'
 
 The package is most useful when used with [TypeScript](http://typescriptlang.org).
 
-
 ## Get started
 
 ```cmd
