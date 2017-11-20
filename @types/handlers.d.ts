@@ -1,2 +1,2 @@
-export { ConsoleMessageHandler } from "./handlers/console-message-handler";
+export { ConsoleMessageHandler } from "simplr-logger";
 export { FileMessageHandler } from "./handlers/file-message-handler";
