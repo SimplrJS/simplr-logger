@@ -47,6 +47,17 @@ export class LoggerConfigurationBuilder {
     }
 
     /**
+     * Add write message handler.
+     *
+     * @param handler Log messages handler.
+     */
+    public AddWriteMessageHandler(handlers: MessageHandlerBase): this {
+        this.AddWriteMessageHandlers([handlers]);
+
+        return this;
+    }
+
+    /**
      * Add write message handlers.
      *
      * @param handlers Log messages handlers list.

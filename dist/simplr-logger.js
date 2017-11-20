@@ -256,6 +256,15 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
         return this;
     };
     /**
+     * Add write message handler.
+     *
+     * @param handler Log messages handler.
+     */
+    LoggerConfigurationBuilder.prototype.AddWriteMessageHandler = function (handlers) {
+        this.AddWriteMessageHandlers([handlers]);
+        return this;
+    };
+    /**
      * Add write message handlers.
      *
      * @param handlers Log messages handlers list.

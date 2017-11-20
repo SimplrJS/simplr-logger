@@ -24,6 +24,12 @@ export declare class LoggerConfigurationBuilder {
      */
     SetWriteMessageHandler(handler: MessageHandlerBase): this;
     /**
+     * Add write message handler.
+     *
+     * @param handler Log messages handler.
+     */
+    AddWriteMessageHandler(handlers: MessageHandlerBase): this;
+    /**
      * Add write message handlers.
      *
      * @param handlers Log messages handlers list.
