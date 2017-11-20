@@ -1,8 +1,7 @@
-import { MessageHandlerBase } from "../abstractions/message-handler-base";
-import { LogLevel } from "../abstractions/log-level";
+import { MessageHandlerBase, LogLevel } from "simplr-logger";
 export declare class FileMessageHandler extends MessageHandlerBase {
     private isServerSide;
-    constructor(filePathName: string, isServerSide?: boolean);
+    constructor(filePathName: string, isServerSide?: boolean | undefined);
     private filePathName;
     private readonly handleMessageStackCount;
     HandleMessage(level: LogLevel, isLevelEnabled: boolean, timestamp: number, messages: any[]): void;

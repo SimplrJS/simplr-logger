@@ -1,19 +1,28 @@
-import * as pathUsedForTypeOnly from "path";
-import * as fsUsedForTypeOnly from "fs";
-import * as osUsedForTypeOnly from "os";
-import { WriteStream } from "fs";
+import { MessageHandlerBase, LogLevel, LoggerHelpers } from "simplr-logger";
 
-import { MessageHandlerBase } from "../abstractions/message-handler-base";
-import { LogLevel } from "../abstractions/log-level";
-import { Helpers } from "../utils/helpers";
+import * as pathTypesOnly from "path";
+import * as fsTypesOnly from "fs";
+import * as osTypesOnly from "os";
+import * as processTypesOnly from "process";
+type WriteStream = fsTypesOnly.WriteStream;
 
 export class FileMessageHandler extends MessageHandlerBase {
-    constructor(filePathName: string, private isServerSide: boolean = typeof process !== "undefined") {
+    constructor(filePathName: string, private isServerSide?: boolean) {
         super();
+
+        if (this.isServerSide == null) {
+            try {
+                // tslint:disable-next-line:no-require-imports no-unused-expression
+                require("process") as typeof processTypesOnly;
+                this.isServerSide = true;
+            } catch {
+                this.isServerSide = false;
+            }
+        }
 
         if (this.isServerSide) {
             // tslint:disable-next-line:no-require-imports
-            const { normalize } = require("path") as typeof pathUsedForTypeOnly;
+            const { normalize } = require("path") as typeof pathTypesOnly;
             this.filePathName = normalize(filePathName);
             this.ensureDirectory();
         }
@@ -58,7 +67,7 @@ export class FileMessageHandler extends MessageHandlerBase {
         }
 
         const datePrefix: string = `[${new Date(timestamp).toLocaleString()}]`;
-        writeStream.write(`${datePrefix} ${Helpers.GetLogLevelShortString(level)}: ${formattedMessages.join(" ")}${this.EOL}`);
+        writeStream.write(`${datePrefix} ${LoggerHelpers.GetLogLevelShortString(level)}: ${formattedMessages.join(" ")}${this.EOL}`);
     }
 
     private writeStream: WriteStream | undefined;
@@ -69,7 +78,7 @@ export class FileMessageHandler extends MessageHandlerBase {
         }
 
         // tslint:disable-next-line:no-require-imports
-        const fs = require("fs") as typeof fsUsedForTypeOnly;
+        const fs = require("fs") as typeof fsTypesOnly;
 
         this.writeStream = fs.createWriteStream(this.filePathName, { flags: "a" });
 
@@ -85,15 +94,15 @@ export class FileMessageHandler extends MessageHandlerBase {
 
     private get EOL(): string {
         // tslint:disable-next-line:no-require-imports
-        const { EOL } = require("os") as typeof osUsedForTypeOnly;
+        const { EOL } = require("os") as typeof osTypesOnly;
         return EOL;
     }
 
     private ensureDirectory(): void {
         // tslint:disable-next-line:no-require-imports
-        const path = require("path") as typeof pathUsedForTypeOnly;
+        const path = require("path") as typeof pathTypesOnly;
         // tslint:disable-next-line:no-require-imports
-        const fs = require("fs") as typeof fsUsedForTypeOnly;
+        const fs = require("fs") as typeof fsTypesOnly;
 
         const dir = path.dirname(this.filePathName);
 
