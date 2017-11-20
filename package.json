@@ -2,7 +2,10 @@
   "name": "simplr-logger",
   "version": "0.4.0-alpha.1",
   "description": "Simple JavaScript logger written in TypeScript.",
-  "main": "dist/simplr-logger.js",
+  "main": "./dist/simplr-logger.js",
+  "directories": {
+    "lib": "./dist"
+  },
   "types": "@types/index.d.ts",
   "scripts": {
     "test": "tsc -p . --noEmit && npm run tslint",
