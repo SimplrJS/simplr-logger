@@ -1,8 +1,6 @@
-import { LogLevel, LoggerConfigurationBuilder, LoggerConfiguration } from "simplr-logger";
+import { LogLevel, LoggerHelpers, LoggerRuntimeConfigurationBuilder } from "simplr-logger";
 
-export class LoggerBuilder {
-    constructor(private configuration: LoggerConfiguration = new LoggerConfigurationBuilder().Build()) { }
-
+export class LoggerBuilder extends LoggerRuntimeConfigurationBuilder {
     /**
      * Writes a log entries with specified log level.
      *
@@ -47,33 +45,22 @@ export class LoggerBuilder {
     public Critical = (...messages: any[]): number => this.log(LogLevel.Critical, ...messages);
 
     /**
-     * Check if log level is enabled.
+     * Write a log entries with trace log level.
      *
-     * @param level Log level value.
+     * @param messages Messages to be written.
      */
-    public IsEnabled(level: LogLevel): boolean {
-        return this.configuration.CustomLogLevels ?
-            ((this.configuration.LogLevel & level) === level) :
-            (this.configuration.LogLevel >= level);
-    }
+    public Trace = (...messages: any[]): number => this.log(LogLevel.Trace, ...messages);
 
     private log(level: LogLevel, ...messages: any[]): number {
         const timestamp = Date.now();
-        const isEnabled = this.IsEnabled(level);
-        if (isEnabled) {
-            if (this.configuration.Prefix) {
-                messages = [this.configuration.Prefix].concat(messages);
-            }
 
-            /**
-             * @deprecated
-             */
-            if (this.configuration.WriteMessageHandler != null) {
-                this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
-            }
+        if (this.Configuration.Prefix) {
+            messages = [this.Configuration.Prefix].concat(messages);
+        }
 
-            for (const handler of this.configuration.WriteMessageHandlers) {
-                handler.HandleMessage(level, isEnabled, timestamp, messages);
+        for (const handlerInstance of this.Configuration.WriteMessageHandlers) {
+            if (LoggerHelpers.IsLogLevelEnabled(handlerInstance.LogLevel, handlerInstance.LogLevelIsBitMask, level)) {
+                handlerInstance.Handler.HandleMessage(level, timestamp, messages);
             }
         }
 
