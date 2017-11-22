@@ -48,7 +48,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
 
     }
 
-    public HandleMessage(level: LogLevel, isEnabled: boolean, timestamp: number, messages: any[]): void {
+    public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
         let method;
 
         let colorStart: string = "";

@@ -32,7 +32,7 @@ export class FileMessageHandler extends MessageHandlerBase {
     // IMPORTANT: The value must be changed after files structure were updated!
     private readonly handleMessageStackCount: number = 4;
 
-    public HandleMessage(level: LogLevel, isLevelEnabled: boolean, timestamp: number, messages: any[]): void {
+    public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
         if (!this.isServerSide) {
             return;
         }
