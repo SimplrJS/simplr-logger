@@ -8,7 +8,8 @@
   },
   "types": "@types/index.d.ts",
   "scripts": {
-    "test": "tsc -p . --noEmit && npm run tslint",
+    "test": "tsc -p . --noEmit && npm run tslint && jest",
+    "jest": "jest",
     "tslint": "tslint --project . --config ./tslint.json",
     "build": "webpack",
     "postbuild": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
@@ -54,9 +55,12 @@
   },
   "homepage": "https://github.com/SimplrJS/simplr-logger#readme",
   "devDependencies": {
+    "@types/jest": "^21.1.7",
     "@types/node": "^8.0.53",
+    "jest": "^21.2.1",
     "rimraf": "^2.6.2",
     "simplr-tslint": "0.0.1",
+    "ts-jest": "^21.2.3",
     "ts-loader": "^3.1.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
@@ -65,5 +69,25 @@
   },
   "dependencies": {
     "tslib": "^1.8.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true,
+        "tsConfigFile": "./tsconfig.json"
+      }
+    },
+    "testRegex": "__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "moduleNameMapper": {
+      "simplr-logger": "<rootDir>/src/index"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }
