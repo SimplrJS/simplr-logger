@@ -274,7 +274,7 @@ describe("IsLogLevelEnabled with bitwise", () => {
         });
     });
 
-    describe("More Values", () => {
+    describe("Multiple Values", () => {
         const caller = LoggerHelpers.IsLogLevelEnabled.bind(undefined, LogLevel.None | LogLevel.Critical | LogLevel.Trace, true);
 
         test("LogLevel.Trace", () => {
@@ -305,5 +305,17 @@ describe("IsLogLevelEnabled with bitwise", () => {
         test("LogLevel.None", () => {
             expect(caller.call(undefined, LogLevel.None)).toBe(true);
         });
+    });
+});
+
+describe("CalculateLogLevelsBitMaskValue", () => {
+    test("One Value", () => {
+        const value = LoggerHelpers.CalculateLogLevelsBitMaskValue([LogLevel.Warning]);
+        expect(value).toBe(LogLevel.Warning);
+    });
+
+    test("Multiple Values", () => {
+        const value = LoggerHelpers.CalculateLogLevelsBitMaskValue([LogLevel.Warning, LogLevel.Critical, LogLevel.Error]);
+        expect(value).toBe(LogLevel.Warning | LogLevel.Critical | LogLevel.Error);
     });
 });
