@@ -123,7 +123,10 @@ export class LoggerConfigurationBuilder {
                         Handler: handler.Handler,
                         ...this.configuration.DefaultLogLevel
                     };
+                } else if (handler.LogLevelIsBitMask == null) {
+                    handler.LogLevelIsBitMask = false;
                 }
+
                 return handler as WriteMessageHandler;
             });
         }
