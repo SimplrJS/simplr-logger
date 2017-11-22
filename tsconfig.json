@@ -13,10 +13,10 @@
         "noUnusedLocals": true,
         "alwaysStrict": false,
         "noImplicitUseStrict": true,
-        "baseUrl": ".",
+        "baseUrl": "./src/",
         "paths": {
             "simplr-logger": [
-                "src/index"
+                "./index"
             ]
         }
     },
