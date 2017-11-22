@@ -319,3 +319,19 @@ describe("CalculateLogLevelsBitMaskValue", () => {
         expect(value).toBe(LogLevel.Warning | LogLevel.Critical | LogLevel.Error);
     });
 });
+
+describe("ResolveLogLevel", () => {
+    test("LogLevel", () => {
+        const resolved = LoggerHelpers.ResolveLogLevel(LogLevel.Information);
+        expect(resolved.value).toBe(LogLevel.Information);
+        expect(resolved.isBitMask).toBe(false);
+        expect(resolved).toMatchSnapshot();
+    });
+
+    test("LogLevels List", () => {
+        const resolved = LoggerHelpers.ResolveLogLevel([LogLevel.Information, LogLevel.Warning, LogLevel.Critical]);
+        expect(resolved.value).toBe(LogLevel.Information | LogLevel.Warning | LogLevel.Critical);
+        expect(resolved.isBitMask).toBe(true);
+        expect(resolved).toMatchSnapshot();
+    });
+});
