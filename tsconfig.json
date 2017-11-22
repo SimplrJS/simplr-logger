@@ -13,6 +13,7 @@
         "noUnusedLocals": true,
         "alwaysStrict": false,
         "noImplicitUseStrict": true,
+        "skipLibCheck": true,
         "baseUrl": "./src/",
         "paths": {
             "simplr-logger": [
@@ -25,6 +26,7 @@
         "@types",
         "dist",
         "scripts",
-        "./*.ts"
+        "./*.ts",
+        "__test__/**/*"
     ]
 }
