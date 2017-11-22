@@ -497,6 +497,9 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
                 if (handler.LogLevel == null) {
                     handler = tslib_1.__assign({ Handler: handler.Handler }, _this.configuration.DefaultLogLevel);
                 }
+                else if (handler.LogLevelIsBitMask == null) {
+                    handler.LogLevelIsBitMask = false;
+                }
                 return handler;
             });
         }
