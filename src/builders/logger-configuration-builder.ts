@@ -1,4 +1,12 @@
-import { LoggerHelpers, LogLevel, ConsoleMessageHandler, LoggerConfiguration, WriteMessageHandler, WriteMessageHandlerBuilder, InitialLoggerConfiguration } from "simplr-logger";
+import {
+    LoggerHelpers,
+    LogLevel,
+    ConsoleMessageHandler,
+    LoggerConfiguration,
+    WriteMessageHandler,
+    WriteMessageHandlerBuilder,
+    InitialLoggerConfiguration
+} from "simplr-logger";
 
 export class LoggerConfigurationBuilder {
     constructor(initConfiguration?: Partial<InitialLoggerConfiguration>) {
@@ -117,7 +125,7 @@ export class LoggerConfigurationBuilder {
                     };
                 }
                 return handler as WriteMessageHandler;
-            }) as WriteMessageHandler[];
+            });
         }
 
         return {
