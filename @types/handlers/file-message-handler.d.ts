@@ -4,7 +4,7 @@ export declare class FileMessageHandler extends MessageHandlerBase {
     constructor(filePathName: string, isServerSide?: boolean | undefined);
     private filePathName;
     private readonly handleMessageStackCount;
-    HandleMessage(level: LogLevel, isLevelEnabled: boolean, timestamp: number, messages: any[]): void;
+    HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void;
     private writeStream;
     private getWriteStream();
     private readonly EOL;

@@ -5,7 +5,7 @@ export declare class ConsoleMessageHandler extends MessageHandlerBase {
     private defaultConfiguration;
     private resolveTimePrefix(timestamp);
     private resolveLogLevelPrefix(level, colorStart);
-    HandleMessage(level: LogLevel, isEnabled: boolean, timestamp: number, messages: any[]): void;
+    HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void;
 }
 export declare namespace ConsoleMessageHandler {
     enum PrefixTypes {

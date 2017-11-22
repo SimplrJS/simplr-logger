@@ -1,52 +1,34 @@
-import { LogLevel, MessageHandlerBase } from "simplr-logger";
-export interface LoggerConfiguration {
-    /**
-     * @deprecated Use WriteMessageHandlers instead.
-     */
-    WriteMessageHandler?: MessageHandlerBase;
-    WriteMessageHandlers: MessageHandlerBase[];
-    LogLevel: LogLevel;
-    CustomLogLevels?: boolean;
-    Prefix?: string;
-}
-/**
- * Logger configuration builder.
- */
+import { LogLevel, LoggerConfiguration, WriteMessageHandlerBuilder, InitialLoggerConfiguration } from "simplr-logger";
 export declare class LoggerConfigurationBuilder {
-    constructor(initConfiguration?: Partial<LoggerConfiguration>);
+    constructor(initConfiguration?: Partial<InitialLoggerConfiguration>);
     private configuration;
     private defaultConfiguration();
     /**
-     * Set custom message handler.
+     * Override configuration with new configuration object.
      *
-     * @param handler Log messages handler.
-     * @deprecated Use AddWriteMessageHandlers instead.
+     * @param configuration Partial configuration object.
      */
-    SetWriteMessageHandler(handler: MessageHandlerBase): this;
+    Override(configuration: Partial<InitialLoggerConfiguration>): this;
     /**
      * Add write message handler.
      *
-     * @param handler Log messages handler.
+     * @param handler Write message handler.
+     * @param defaultLogLevel Default log level only for this handler.
      */
-    AddWriteMessageHandler(handlers: MessageHandlerBase): this;
+    AddWriteMessageHandler(handler: WriteMessageHandlerBuilder, defaultLogLevel?: LogLevel | LogLevel[]): this;
     /**
-     * Add write message handlers.
+     * Add a list of write message handlers.
      *
-     * @param handlers Log messages handlers list.
+     * @param handlers Write message handlers list.
+     * @param defaultLogLevel Default log level only for this list of handler.
      */
-    AddWriteMessageHandlers(handlers: MessageHandlerBase[]): this;
+    AddWriteMessageHandlers(handlers: WriteMessageHandlerBuilder[], defaultLogLevel?: LogLevel | LogLevel[]): this;
     /**
-     * Set log level.
+     * Set logger default log level.
      *
-     * @param logLevel LogLevel value or bit mask values.
+     * @param logLevels LogLevel value or custom list of LogLevels.
      */
-    SetLogLevel(logLevel: LogLevel): this;
-    /**
-     * Set custom log levels.
-     *
-     * @param logLevels List of log level.
-     */
-    SetCustomLogLevels(logLevels: LogLevel[]): this;
+    SetDefaultLogLevels(logLevels: LogLevel | LogLevel[]): this;
     /**
      * Set the first message in messages list.
      *
