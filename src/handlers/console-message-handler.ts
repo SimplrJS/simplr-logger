@@ -79,7 +79,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
 
         const prefixList: string[] = [];
 
-        const timePrefix = LoggerHelpers.ResolveLogLevelPrefix(this.configuration.TimePrefix, timestamp);
+        const timePrefix = LoggerHelpers.ResolveTimePrefix(this.configuration.TimePrefix, timestamp);
         if (timePrefix != null) {
             prefixList.push(`[${timePrefix}]`);
         }

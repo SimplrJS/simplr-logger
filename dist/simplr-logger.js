@@ -373,7 +373,7 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             }
         }
         var prefixList = [];
-        var timePrefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.TimePrefix, timestamp);
+        var timePrefix = simplr_logger_1.LoggerHelpers.ResolveTimePrefix(this.configuration.TimePrefix, timestamp);
         if (timePrefix != null) {
             prefixList.push("[" + timePrefix + "]");
         }
