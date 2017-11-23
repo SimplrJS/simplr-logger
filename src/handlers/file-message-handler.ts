@@ -107,11 +107,18 @@ export class FileMessageHandler extends MessageHandlerBase {
 
         const dir = path.dirname(this.filePathName);
 
+        const isAbsolute = (dir[0] !== path.sep && path.isAbsolute(dir));
         const dirList = dir.split(path.sep);
-        let targetDir: string = (dir[0] !== path.sep && path.isAbsolute(dir)) ? "" : process.cwd();
-        for (const a of dirList) {
-            targetDir = path.join(targetDir, a);
-            if (a.length > 0 && !fs.existsSync(targetDir)) {
+        let targetDir: string = "";
+        if (isAbsolute) {
+            dirList[0] = dirList[0] + path.sep;
+        } else {
+            targetDir += process.cwd();
+        }
+
+        for (const dirItem of dirList) {
+            targetDir = path.join(targetDir, dirItem);
+            if (dirItem.length > 0 && !fs.existsSync(targetDir)) {
                 fs.mkdirSync(targetDir);
             }
         }

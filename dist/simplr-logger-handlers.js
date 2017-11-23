@@ -214,12 +214,19 @@ var FileMessageHandler = /** @class */ (function (_super) {
         // tslint:disable-next-line:no-require-imports
         var fs = __webpack_require__(3);
         var dir = path.dirname(this.filePathName);
+        var isAbsolute = (dir[0] !== path.sep && path.isAbsolute(dir));
         var dirList = dir.split(path.sep);
-        var targetDir = (dir[0] !== path.sep && path.isAbsolute(dir)) ? "" : process.cwd();
+        var targetDir = "";
+        if (isAbsolute) {
+            dirList[0] = dirList[0] + path.sep;
+        }
+        else {
+            targetDir += process.cwd();
+        }
         for (var _i = 0, dirList_1 = dirList; _i < dirList_1.length; _i++) {
-            var a = dirList_1[_i];
-            targetDir = path.join(targetDir, a);
-            if (a.length > 0 && !fs.existsSync(targetDir)) {
+            var dirItem = dirList_1[_i];
+            targetDir = path.join(targetDir, dirItem);
+            if (dirItem.length > 0 && !fs.existsSync(targetDir)) {
                 fs.mkdirSync(targetDir);
             }
         }
