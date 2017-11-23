@@ -10,6 +10,7 @@
   "scripts": {
     "test": "tsc -p . --noEmit && npm run tslint && jest",
     "jest": "jest",
+    "coveralls": "coveralls < coverage/lcov.info",
     "tslint": "tslint --project . --config ./tslint.json",
     "build": "webpack",
     "postbuild": "uglifyjs ./dist/simplr-logger.js -o ./dist/simplr-logger.min.js --compress --mangle",
@@ -57,6 +58,7 @@
   "devDependencies": {
     "@types/jest": "^21.1.7",
     "@types/node": "^8.0.53",
+    "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "rimraf": "^2.6.2",
     "simplr-tslint": "0.0.1",
@@ -71,6 +73,7 @@
     "tslib": "^1.8.0"
   },
   "jest": {
+    "collectCoverage": true,
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
