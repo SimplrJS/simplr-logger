@@ -1,7 +1,5 @@
-import { LogLevel, LoggerConfiguration } from "simplr-logger";
-export declare class LoggerBuilder {
-    private configuration;
-    constructor(configuration?: LoggerConfiguration);
+import { LogLevel, LoggerRuntimeConfigurationBuilder } from "simplr-logger";
+export declare class LoggerBuilder extends LoggerRuntimeConfigurationBuilder {
     /**
      * Writes a log entries with specified log level.
      *
@@ -40,10 +38,10 @@ export declare class LoggerBuilder {
      */
     Critical: (...messages: any[]) => number;
     /**
-     * Check if log level is enabled.
+     * Write a log entries with trace log level.
      *
-     * @param level Log level value.
+     * @param messages Messages to be written.
      */
-    IsEnabled(level: LogLevel): boolean;
+    Trace: (...messages: any[]) => number;
     private log(level, ...messages);
 }

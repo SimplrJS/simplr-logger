@@ -149,7 +149,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
         }
         return _this;
     }
-    FileMessageHandler.prototype.HandleMessage = function (level, isLevelEnabled, timestamp, messages) {
+    FileMessageHandler.prototype.HandleMessage = function (level, timestamp, messages) {
         if (!this.isServerSide) {
             return;
         }

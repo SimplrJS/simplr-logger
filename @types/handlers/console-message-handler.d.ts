@@ -1,21 +1,15 @@
-import { MessageHandlerBase, LogLevel } from "simplr-logger";
+import { MessageHandlerBase, LogLevel, PrefixType } from "simplr-logger";
 export declare class ConsoleMessageHandler extends MessageHandlerBase {
     constructor(configuration?: Partial<ConsoleMessageHandler.Configuration>);
     private configuration;
     private defaultConfiguration;
-    private resolveTimePrefix(timestamp);
     private resolveLogLevelPrefix(level, colorStart);
-    HandleMessage(level: LogLevel, isEnabled: boolean, timestamp: number, messages: any[]): void;
+    HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void;
 }
 export declare namespace ConsoleMessageHandler {
-    enum PrefixTypes {
-        none = "none",
-        short = "short",
-        full = "full",
-    }
     interface Configuration {
-        LogLevelPrefix: PrefixTypes | keyof typeof PrefixTypes;
-        TimePrefix: PrefixTypes | keyof typeof PrefixTypes;
+        LogLevelPrefix: PrefixType | keyof typeof PrefixType;
+        TimePrefix: PrefixType | keyof typeof PrefixType;
         UseColors: boolean;
     }
 }

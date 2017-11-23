@@ -1,47 +1,44 @@
-import { LogLevel, ConsoleMessageHandler, MessageHandlerBase } from "simplr-logger";
+import {
+    LoggerHelpers,
+    LogLevel,
+    ConsoleMessageHandler,
+    LoggerConfiguration,
+    WriteMessageHandler,
+    WriteMessageHandlerBuilder,
+    InitialLoggerConfiguration
+} from "simplr-logger";
 
-export interface LoggerConfiguration {
-    /**
-     * @deprecated Use WriteMessageHandlers instead.
-     */
-    WriteMessageHandler?: MessageHandlerBase;
-    WriteMessageHandlers: MessageHandlerBase[];
-    LogLevel: LogLevel;
-    CustomLogLevels?: boolean;
-    Prefix?: string;
-}
-
-/**
- * Logger configuration builder.
- */
 export class LoggerConfigurationBuilder {
-    constructor(initConfiguration?: Partial<LoggerConfiguration>) {
+    constructor(initConfiguration?: Partial<InitialLoggerConfiguration>) {
         this.configuration = {
             ...this.defaultConfiguration(),
-            ...this.configuration
+            ...initConfiguration
         };
     }
 
-    private configuration: LoggerConfiguration;
+    private configuration: InitialLoggerConfiguration;
 
-    private defaultConfiguration(): Partial<LoggerConfiguration> {
+    private defaultConfiguration(): LoggerConfiguration {
         return {
-            WriteMessageHandler: undefined,
-            WriteMessageHandlers: undefined,
-            LogLevel: LogLevel.Warning,
-            CustomLogLevels: false,
+            WriteMessageHandlers: [],
+            DefaultLogLevel: {
+                LogLevel: LogLevel.Warning,
+                LogLevelIsBitMask: false
+            },
             Prefix: undefined
         };
     }
 
     /**
-     * Set custom message handler.
+     * Override configuration with new configuration object.
      *
-     * @param handler Log messages handler.
-     * @deprecated Use AddWriteMessageHandlers instead.
+     * @param configuration Partial configuration object.
      */
-    public SetWriteMessageHandler(handler: MessageHandlerBase): this {
-        this.configuration.WriteMessageHandler = handler;
+    public Override(configuration: Partial<InitialLoggerConfiguration>): this {
+        this.configuration = {
+            ...this.configuration,
+            ...configuration
+        };
 
         return this;
     }
@@ -49,22 +46,31 @@ export class LoggerConfigurationBuilder {
     /**
      * Add write message handler.
      *
-     * @param handler Log messages handler.
+     * @param handler Write message handler.
+     * @param defaultLogLevel Default log level only for this handler.
      */
-    public AddWriteMessageHandler(handlers: MessageHandlerBase): this {
-        this.AddWriteMessageHandlers([handlers]);
+    public AddWriteMessageHandler(handler: WriteMessageHandlerBuilder, defaultLogLevel?: LogLevel | LogLevel[]): this {
+        this.AddWriteMessageHandlers([handler], defaultLogLevel);
 
         return this;
     }
 
     /**
-     * Add write message handlers.
+     * Add a list of write message handlers.
      *
-     * @param handlers Log messages handlers list.
+     * @param handlers Write message handlers list.
+     * @param defaultLogLevel Default log level only for this list of handler.
      */
-    public AddWriteMessageHandlers(handlers: MessageHandlerBase[]): this {
-        if (this.configuration.WriteMessageHandlers == null) {
-            this.configuration.WriteMessageHandlers = handlers;
+    public AddWriteMessageHandlers(handlers: WriteMessageHandlerBuilder[], defaultLogLevel?: LogLevel | LogLevel[]): this {
+        if (defaultLogLevel != null) {
+            const { isBitMask, value } = LoggerHelpers.ResolveLogLevel(defaultLogLevel);
+            handlers = handlers.map(handler => {
+                if (handler.LogLevel == null) {
+                    handler.LogLevel = value;
+                    handler.LogLevelIsBitMask = isBitMask;
+                }
+                return handler;
+            });
         }
         this.configuration.WriteMessageHandlers = this.configuration.WriteMessageHandlers.concat(handlers);
 
@@ -72,29 +78,16 @@ export class LoggerConfigurationBuilder {
     }
 
     /**
-     * Set log level.
+     * Set logger default log level.
      *
-     * @param logLevel LogLevel value or bit mask values.
+     * @param logLevels LogLevel value or custom list of LogLevels.
      */
-    public SetLogLevel(logLevel: LogLevel): this {
-        this.configuration.LogLevel = logLevel;
-        this.configuration.CustomLogLevels = false;
-
-        return this;
-    }
-
-    /**
-     * Set custom log levels.
-     *
-     * @param logLevels List of log level.
-     */
-    public SetCustomLogLevels(logLevels: LogLevel[]): this {
-        let logLevel = LogLevel.None;
-        for (const level of logLevels) {
-            logLevel |= level;
-        }
-        this.configuration.LogLevel = logLevel;
-        this.configuration.CustomLogLevels = true;
+    public SetDefaultLogLevels(logLevels: LogLevel | LogLevel[]): this {
+        const { isBitMask, value } = LoggerHelpers.ResolveLogLevel(logLevels);
+        this.configuration.DefaultLogLevel = {
+            LogLevel: value,
+            LogLevelIsBitMask: isBitMask
+        };
 
         return this;
     }
@@ -114,10 +107,34 @@ export class LoggerConfigurationBuilder {
      * Build configuration result object.
      */
     public Build(): LoggerConfiguration {
-        if (this.configuration.WriteMessageHandler == null && this.configuration.WriteMessageHandlers == null) {
-            this.AddWriteMessageHandlers([new ConsoleMessageHandler()]);
+        let writeMessageHandlers: WriteMessageHandler[];
+
+        if (this.configuration.WriteMessageHandlers.length === 0) {
+            this.AddWriteMessageHandler({
+                Handler: new ConsoleMessageHandler(),
+                ...this.configuration.DefaultLogLevel
+            });
+
+            writeMessageHandlers = this.configuration.WriteMessageHandlers as WriteMessageHandler[];
+        } else {
+            writeMessageHandlers = this.configuration.WriteMessageHandlers.map<WriteMessageHandler>(handler => {
+                if (handler.LogLevel == null) {
+                    handler = {
+                        Handler: handler.Handler,
+                        ...this.configuration.DefaultLogLevel
+                    };
+                } else if (handler.LogLevelIsBitMask == null) {
+                    handler.LogLevelIsBitMask = false;
+                }
+
+                return handler as WriteMessageHandler;
+            });
         }
 
-        return this.configuration;
+        return {
+            WriteMessageHandlers: writeMessageHandlers,
+            DefaultLogLevel: this.configuration.DefaultLogLevel,
+            Prefix: this.configuration.Prefix
+        };
     }
 }

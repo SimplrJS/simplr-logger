@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResolveLogLevel LogLevel 1`] = `
+Object {
+  "isBitMask": false,
+  "value": 8,
+}
+`;
+
+exports[`ResolveLogLevel LogLevels List 1`] = `
+Object {
+  "isBitMask": true,
+  "value": 13,
+}
+`;

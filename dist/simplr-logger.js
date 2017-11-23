@@ -78,18 +78,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var logger_builder_1 = __webpack_require__(2);
-exports.LoggerBuilder = logger_builder_1.LoggerBuilder;
-var logger_configuration_builder_1 = __webpack_require__(3);
-exports.LoggerConfigurationBuilder = logger_configuration_builder_1.LoggerConfigurationBuilder;
-var log_level_1 = __webpack_require__(4);
+var helpers_1 = __webpack_require__(2);
+exports.LoggerHelpers = helpers_1.Helpers;
+var log_level_1 = __webpack_require__(3);
 exports.LogLevel = log_level_1.LogLevel;
-var message_handler_base_1 = __webpack_require__(5);
+var message_handler_base_1 = __webpack_require__(4);
 exports.MessageHandlerBase = message_handler_base_1.MessageHandlerBase;
+var prefix_type_1 = __webpack_require__(5);
+exports.PrefixType = prefix_type_1.PrefixType;
 var console_message_handler_1 = __webpack_require__(6);
 exports.ConsoleMessageHandler = console_message_handler_1.ConsoleMessageHandler;
-var helpers_1 = __webpack_require__(8);
-exports.LoggerHelpers = helpers_1.Helpers;
+var logger_configuration_builder_1 = __webpack_require__(8);
+exports.LoggerConfigurationBuilder = logger_configuration_builder_1.LoggerConfigurationBuilder;
+var logger_runtime_configuration_builder_1 = __webpack_require__(9);
+exports.LoggerRuntimeConfigurationBuilder = logger_runtime_configuration_builder_1.LoggerRuntimeConfigurationBuilder;
+var logger_builder_1 = __webpack_require__(10);
+exports.LoggerBuilder = logger_builder_1.LoggerBuilder;
 
 
 /***/ }),
@@ -104,228 +108,128 @@ module.exports = require("tslib");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var simplr_logger_1 = __webpack_require__(0);
-var LoggerBuilder = /** @class */ (function () {
-    function LoggerBuilder(configuration) {
-        if (configuration === void 0) { configuration = new simplr_logger_1.LoggerConfigurationBuilder().Build(); }
-        var _this = this;
-        this.configuration = configuration;
-        /**
-         * Writes a log entries with specified log level.
-         *
-         * @param level Entries will be written on this level.
-         * @param messages Messages to be written.
-         */
-        this.Log = function (level) {
-            var messages = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                messages[_i - 1] = arguments[_i];
-            }
-            return _this.log.apply(_this, [level].concat(messages));
-        };
-        /**
-         * Write a log entries with debug log level.
-         *
-         * @param messages Messages to be written.
-         */
-        this.Debug = function () {
-            var messages = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                messages[_i] = arguments[_i];
-            }
-            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Debug].concat(messages));
-        };
-        /**
-         * Write a log entries with information log level.
-         *
-         * @param messages Messages to be written.
-         */
-        this.Info = function () {
-            var messages = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                messages[_i] = arguments[_i];
-            }
-            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Information].concat(messages));
-        };
-        /**
-         * Write a log entries with warning log level.
-         *
-         * @param messages Messages to be written.
-         */
-        this.Warn = function () {
-            var messages = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                messages[_i] = arguments[_i];
-            }
-            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Warning].concat(messages));
-        };
-        /**
-         * Write a log entries with error log level.
-         *
-         * @param messages Messages to be written.
-         */
-        this.Error = function () {
-            var messages = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                messages[_i] = arguments[_i];
-            }
-            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Error].concat(messages));
-        };
-        /**
-         * Write a log entries with critical log level.
-         *
-         * @param messages Messages to be written.
-         */
-        this.Critical = function () {
-            var messages = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                messages[_i] = arguments[_i];
-            }
-            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Critical].concat(messages));
-        };
+var Helpers;
+(function (Helpers) {
+    /**
+     * Return short name of log level.
+     *
+     * @param logLevel Log level value.
+     */
+    function GetLogLevelShortString(logLevel) {
+        switch (logLevel) {
+            case simplr_logger_1.LogLevel.Critical:
+                return "crit";
+            case simplr_logger_1.LogLevel.Error:
+                return "erro";
+            case simplr_logger_1.LogLevel.Warning:
+                return "warn";
+            case simplr_logger_1.LogLevel.Information:
+                return "info";
+            case simplr_logger_1.LogLevel.Debug:
+                return "dbug";
+            case simplr_logger_1.LogLevel.Trace:
+                return "trce";
+            case simplr_logger_1.LogLevel.None:
+            default:
+                return "none";
+        }
     }
+    Helpers.GetLogLevelShortString = GetLogLevelShortString;
     /**
-     * Check if log level is enabled.
+     * Return full name of log level.
      *
-     * @param level Log level value.
+     * @param logLevel Log level value.
      */
-    LoggerBuilder.prototype.IsEnabled = function (level) {
-        return this.configuration.CustomLogLevels ?
-            ((this.configuration.LogLevel & level) === level) :
-            (this.configuration.LogLevel >= level);
-    };
-    LoggerBuilder.prototype.log = function (level) {
-        var messages = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            messages[_i - 1] = arguments[_i];
-        }
-        var timestamp = Date.now();
-        var isEnabled = this.IsEnabled(level);
-        if (isEnabled) {
-            if (this.configuration.Prefix) {
-                messages = [this.configuration.Prefix].concat(messages);
-            }
-            /**
-             * @deprecated
-             */
-            if (this.configuration.WriteMessageHandler != null) {
-                this.configuration.WriteMessageHandler.HandleMessage(level, isEnabled, timestamp, messages);
-            }
-            for (var _a = 0, _b = this.configuration.WriteMessageHandlers; _a < _b.length; _a++) {
-                var handler = _b[_a];
-                handler.HandleMessage(level, isEnabled, timestamp, messages);
-            }
-        }
-        return timestamp;
-    };
-    return LoggerBuilder;
-}());
-exports.LoggerBuilder = LoggerBuilder;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var simplr_logger_1 = __webpack_require__(0);
-/**
- * Logger configuration builder.
- */
-var LoggerConfigurationBuilder = /** @class */ (function () {
-    function LoggerConfigurationBuilder(initConfiguration) {
-        this.configuration = tslib_1.__assign({}, this.defaultConfiguration(), this.configuration);
+    function GetLogLevelString(logLevel) {
+        return simplr_logger_1.LogLevel[logLevel].toString();
     }
-    LoggerConfigurationBuilder.prototype.defaultConfiguration = function () {
-        return {
-            WriteMessageHandler: undefined,
-            WriteMessageHandlers: undefined,
-            LogLevel: simplr_logger_1.LogLevel.Warning,
-            CustomLogLevels: false,
-            Prefix: undefined
-        };
-    };
+    Helpers.GetLogLevelString = GetLogLevelString;
     /**
-     * Set custom message handler.
+     * Resolve and calculate log level details.
      *
-     * @param handler Log messages handler.
-     * @deprecated Use AddWriteMessageHandlers instead.
+     * @param logLevels Log level value or list of log level values.
      */
-    LoggerConfigurationBuilder.prototype.SetWriteMessageHandler = function (handler) {
-        this.configuration.WriteMessageHandler = handler;
-        return this;
-    };
-    /**
-     * Add write message handler.
-     *
-     * @param handler Log messages handler.
-     */
-    LoggerConfigurationBuilder.prototype.AddWriteMessageHandler = function (handlers) {
-        this.AddWriteMessageHandlers([handlers]);
-        return this;
-    };
-    /**
-     * Add write message handlers.
-     *
-     * @param handlers Log messages handlers list.
-     */
-    LoggerConfigurationBuilder.prototype.AddWriteMessageHandlers = function (handlers) {
-        if (this.configuration.WriteMessageHandlers == null) {
-            this.configuration.WriteMessageHandlers = handlers;
+    function ResolveLogLevel(logLevels) {
+        if (typeof logLevels === "number") {
+            return {
+                value: logLevels,
+                isBitMask: false
+            };
         }
-        this.configuration.WriteMessageHandlers = this.configuration.WriteMessageHandlers.concat(handlers);
-        return this;
-    };
+        else {
+            return {
+                value: CalculateLogLevelsBitMaskValue(logLevels),
+                isBitMask: true
+            };
+        }
+    }
+    Helpers.ResolveLogLevel = ResolveLogLevel;
     /**
-     * Set log level.
+     * Calculate log level bit mask value.
      *
-     * @param logLevel LogLevel value or bit mask values.
+     * @param logLevels List of log levels.
      */
-    LoggerConfigurationBuilder.prototype.SetLogLevel = function (logLevel) {
-        this.configuration.LogLevel = logLevel;
-        this.configuration.CustomLogLevels = false;
-        return this;
-    };
-    /**
-     * Set custom log levels.
-     *
-     * @param logLevels List of log level.
-     */
-    LoggerConfigurationBuilder.prototype.SetCustomLogLevels = function (logLevels) {
+    function CalculateLogLevelsBitMaskValue(logLevels) {
         var logLevel = simplr_logger_1.LogLevel.None;
         for (var _i = 0, logLevels_1 = logLevels; _i < logLevels_1.length; _i++) {
             var level = logLevels_1[_i];
             logLevel |= level;
         }
-        this.configuration.LogLevel = logLevel;
-        this.configuration.CustomLogLevels = true;
-        return this;
-    };
+        return logLevel;
+    }
+    Helpers.CalculateLogLevelsBitMaskValue = CalculateLogLevelsBitMaskValue;
     /**
-     * Set the first message in messages list.
+     * Check if log level is enabled in handler.
      *
-     * @param prefix Prefix string value.
+     * @param currentLogLevel Handler current log level.
+     * @param currentLogLevelIsBitMask Handler current log level bit mask value.
+     * @param targetLogLevel Checking log level value.
      */
-    LoggerConfigurationBuilder.prototype.SetPrefix = function (prefix) {
-        this.configuration.Prefix = prefix;
-        return this;
-    };
+    function IsLogLevelEnabled(currentLogLevel, currentLogLevelIsBitMask, targetLogLevel) {
+        return currentLogLevelIsBitMask ?
+            ((currentLogLevel & targetLogLevel) === targetLogLevel) :
+            (currentLogLevel >= targetLogLevel);
+    }
+    Helpers.IsLogLevelEnabled = IsLogLevelEnabled;
     /**
-     * Build configuration result object.
+     * Resolve log level string prefix by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param logLevel Current log level.
      */
-    LoggerConfigurationBuilder.prototype.Build = function () {
-        if (this.configuration.WriteMessageHandler == null && this.configuration.WriteMessageHandlers == null) {
-            this.AddWriteMessageHandlers([new simplr_logger_1.ConsoleMessageHandler()]);
+    function ResolveLogLevelPrefix(prefixType, logLevel) {
+        switch (prefixType) {
+            case simplr_logger_1.PrefixType.None:
+                return undefined;
+            case simplr_logger_1.PrefixType.Short:
+                return GetLogLevelShortString(logLevel);
+            case simplr_logger_1.PrefixType.Full:
+                return GetLogLevelString(logLevel);
         }
-        return this.configuration;
-    };
-    return LoggerConfigurationBuilder;
-}());
-exports.LoggerConfigurationBuilder = LoggerConfigurationBuilder;
+    }
+    Helpers.ResolveLogLevelPrefix = ResolveLogLevelPrefix;
+    /**
+     * Resolve date string by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param timestamp Timestamp to resolve.
+     */
+    function ResolveTimePrefix(prefixType, timestamp) {
+        switch (prefixType) {
+            case simplr_logger_1.PrefixType.None:
+                return undefined;
+            case simplr_logger_1.PrefixType.Short:
+                return new Date(timestamp).toLocaleTimeString();
+            case simplr_logger_1.PrefixType.Full:
+                return new Date(timestamp).toLocaleString();
+        }
+    }
+    Helpers.ResolveTimePrefix = ResolveTimePrefix;
+})(Helpers = exports.Helpers || (exports.Helpers = {}));
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -371,7 +275,7 @@ var LogLevel;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -381,6 +285,19 @@ var MessageHandlerBase = /** @class */ (function () {
     return MessageHandlerBase;
 }());
 exports.MessageHandlerBase = MessageHandlerBase;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var PrefixType;
+(function (PrefixType) {
+    PrefixType["None"] = "None";
+    PrefixType["Short"] = "Short";
+    PrefixType["Full"] = "Full";
+})(PrefixType = exports.PrefixType || (exports.PrefixType = {}));
 
 
 /***/ }),
@@ -396,38 +313,25 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
     function ConsoleMessageHandler(configuration) {
         var _this = _super.call(this) || this;
         _this.defaultConfiguration = {
-            LogLevelPrefix: ConsoleMessageHandler.PrefixTypes.short,
-            TimePrefix: ConsoleMessageHandler.PrefixTypes.short,
+            LogLevelPrefix: simplr_logger_1.PrefixType.Short,
+            TimePrefix: simplr_logger_1.PrefixType.Short,
             UseColors: typeof window === "undefined"
         };
         _this.configuration = tslib_1.__assign({}, _this.defaultConfiguration, configuration);
         return _this;
     }
-    ConsoleMessageHandler.prototype.resolveTimePrefix = function (timestamp) {
-        switch (this.configuration.TimePrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return "[" + new Date(timestamp).toLocaleTimeString() + "]";
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return "[" + new Date(timestamp).toLocaleString() + "]";
-        }
-    };
     ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorStart) {
         if (level === simplr_logger_1.LogLevel.Trace) {
             return undefined;
         }
-        var startString = this.configuration.UseColors ? colorStart : "";
-        switch (this.configuration.LogLevelPrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return "" + startString + simplr_logger_1.LoggerHelpers.GetLogLevelShortString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return "" + startString + simplr_logger_1.LoggerHelpers.GetLogLevelString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
+        var prefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.LogLevelPrefix, level);
+        if (prefix == null) {
+            return undefined;
         }
+        var colorPrefix = this.configuration.UseColors ? colorStart : "";
+        return "" + colorPrefix + prefix + ansi_color_codes_1.ANSIColorCodes.Reset;
     };
-    ConsoleMessageHandler.prototype.HandleMessage = function (level, isEnabled, timestamp, messages) {
+    ConsoleMessageHandler.prototype.HandleMessage = function (level, timestamp, messages) {
         var method;
         var colorStart = "";
         switch (level) {
@@ -469,9 +373,9 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             }
         }
         var prefixList = [];
-        var timePrefix = this.resolveTimePrefix(timestamp);
+        var timePrefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.TimePrefix, timestamp);
         if (timePrefix != null) {
-            prefixList.push(timePrefix);
+            prefixList.push("[" + timePrefix + "]");
         }
         var logLevelPrefix = this.resolveLogLevelPrefix(level, colorStart);
         if (logLevelPrefix != null) {
@@ -487,15 +391,6 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
     };
     return ConsoleMessageHandler;
 }(simplr_logger_1.MessageHandlerBase));
-exports.ConsoleMessageHandler = ConsoleMessageHandler;
-(function (ConsoleMessageHandler) {
-    var PrefixTypes;
-    (function (PrefixTypes) {
-        PrefixTypes["none"] = "none";
-        PrefixTypes["short"] = "short";
-        PrefixTypes["full"] = "full";
-    })(PrefixTypes = ConsoleMessageHandler.PrefixTypes || (ConsoleMessageHandler.PrefixTypes = {}));
-})(ConsoleMessageHandler = exports.ConsoleMessageHandler || (exports.ConsoleMessageHandler = {}));
 exports.ConsoleMessageHandler = ConsoleMessageHandler;
 
 
@@ -537,36 +432,261 @@ var ANSIColorCodes;
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(1);
 var simplr_logger_1 = __webpack_require__(0);
-var HelpersBuilder = /** @class */ (function () {
-    function HelpersBuilder() {
+var LoggerConfigurationBuilder = /** @class */ (function () {
+    function LoggerConfigurationBuilder(initConfiguration) {
+        this.configuration = tslib_1.__assign({}, this.defaultConfiguration(), initConfiguration);
     }
-    HelpersBuilder.prototype.GetLogLevelShortString = function (level) {
-        switch (level) {
-            case simplr_logger_1.LogLevel.Critical:
-                return "crit";
-            case simplr_logger_1.LogLevel.Error:
-                return "erro";
-            case simplr_logger_1.LogLevel.Warning:
-                return "warn";
-            case simplr_logger_1.LogLevel.Information:
-                return "info";
-            case simplr_logger_1.LogLevel.Debug:
-                return "dbug";
-            case simplr_logger_1.LogLevel.Trace:
-                return "trce";
-            case simplr_logger_1.LogLevel.None:
-            default:
-                return "none";
+    LoggerConfigurationBuilder.prototype.defaultConfiguration = function () {
+        return {
+            WriteMessageHandlers: [],
+            DefaultLogLevel: {
+                LogLevel: simplr_logger_1.LogLevel.Warning,
+                LogLevelIsBitMask: false
+            },
+            Prefix: undefined
+        };
+    };
+    /**
+     * Override configuration with new configuration object.
+     *
+     * @param configuration Partial configuration object.
+     */
+    LoggerConfigurationBuilder.prototype.Override = function (configuration) {
+        this.configuration = tslib_1.__assign({}, this.configuration, configuration);
+        return this;
+    };
+    /**
+     * Add write message handler.
+     *
+     * @param handler Write message handler.
+     * @param defaultLogLevel Default log level only for this handler.
+     */
+    LoggerConfigurationBuilder.prototype.AddWriteMessageHandler = function (handler, defaultLogLevel) {
+        this.AddWriteMessageHandlers([handler], defaultLogLevel);
+        return this;
+    };
+    /**
+     * Add a list of write message handlers.
+     *
+     * @param handlers Write message handlers list.
+     * @param defaultLogLevel Default log level only for this list of handler.
+     */
+    LoggerConfigurationBuilder.prototype.AddWriteMessageHandlers = function (handlers, defaultLogLevel) {
+        if (defaultLogLevel != null) {
+            var _a = simplr_logger_1.LoggerHelpers.ResolveLogLevel(defaultLogLevel), isBitMask_1 = _a.isBitMask, value_1 = _a.value;
+            handlers = handlers.map(function (handler) {
+                if (handler.LogLevel == null) {
+                    handler.LogLevel = value_1;
+                    handler.LogLevelIsBitMask = isBitMask_1;
+                }
+                return handler;
+            });
         }
+        this.configuration.WriteMessageHandlers = this.configuration.WriteMessageHandlers.concat(handlers);
+        return this;
     };
-    HelpersBuilder.prototype.GetLogLevelString = function (level) {
-        return simplr_logger_1.LogLevel[level].toString();
+    /**
+     * Set logger default log level.
+     *
+     * @param logLevels LogLevel value or custom list of LogLevels.
+     */
+    LoggerConfigurationBuilder.prototype.SetDefaultLogLevels = function (logLevels) {
+        var _a = simplr_logger_1.LoggerHelpers.ResolveLogLevel(logLevels), isBitMask = _a.isBitMask, value = _a.value;
+        this.configuration.DefaultLogLevel = {
+            LogLevel: value,
+            LogLevelIsBitMask: isBitMask
+        };
+        return this;
     };
-    return HelpersBuilder;
+    /**
+     * Set the first message in messages list.
+     *
+     * @param prefix Prefix string value.
+     */
+    LoggerConfigurationBuilder.prototype.SetPrefix = function (prefix) {
+        this.configuration.Prefix = prefix;
+        return this;
+    };
+    /**
+     * Build configuration result object.
+     */
+    LoggerConfigurationBuilder.prototype.Build = function () {
+        var _this = this;
+        var writeMessageHandlers;
+        if (this.configuration.WriteMessageHandlers.length === 0) {
+            this.AddWriteMessageHandler(tslib_1.__assign({ Handler: new simplr_logger_1.ConsoleMessageHandler() }, this.configuration.DefaultLogLevel));
+            writeMessageHandlers = this.configuration.WriteMessageHandlers;
+        }
+        else {
+            writeMessageHandlers = this.configuration.WriteMessageHandlers.map(function (handler) {
+                if (handler.LogLevel == null) {
+                    handler = tslib_1.__assign({ Handler: handler.Handler }, _this.configuration.DefaultLogLevel);
+                }
+                else if (handler.LogLevelIsBitMask == null) {
+                    handler.LogLevelIsBitMask = false;
+                }
+                return handler;
+            });
+        }
+        return {
+            WriteMessageHandlers: writeMessageHandlers,
+            DefaultLogLevel: this.configuration.DefaultLogLevel,
+            Prefix: this.configuration.Prefix
+        };
+    };
+    return LoggerConfigurationBuilder;
 }());
-exports.HelpersBuilder = HelpersBuilder;
-exports.Helpers = new HelpersBuilder();
+exports.LoggerConfigurationBuilder = LoggerConfigurationBuilder;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var simplr_logger_1 = __webpack_require__(0);
+var LoggerRuntimeConfigurationBuilder = /** @class */ (function () {
+    function LoggerRuntimeConfigurationBuilder(Configuration) {
+        if (Configuration === void 0) { Configuration = new simplr_logger_1.LoggerConfigurationBuilder().Build(); }
+        this.Configuration = Configuration;
+    }
+    /**
+     * Update existing logger configuration.
+     *
+     * @param updater Updater handler which return new configuration.
+     * @param setInitialConfigurationFromCurrent [default=true]
+     * @param setInitialConfigurationFromCurrent Set builder initial configuration from the current logger configuration.
+     */
+    LoggerRuntimeConfigurationBuilder.prototype.UpdateConfiguration = function (updater, setInitialConfigurationFromCurrent) {
+        if (setInitialConfigurationFromCurrent === void 0) { setInitialConfigurationFromCurrent = true; }
+        this.Configuration = updater(new simplr_logger_1.LoggerConfigurationBuilder(setInitialConfigurationFromCurrent ? this.Configuration : undefined));
+        return this;
+    };
+    return LoggerRuntimeConfigurationBuilder;
+}());
+exports.LoggerRuntimeConfigurationBuilder = LoggerRuntimeConfigurationBuilder;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(1);
+var simplr_logger_1 = __webpack_require__(0);
+var LoggerBuilder = /** @class */ (function (_super) {
+    tslib_1.__extends(LoggerBuilder, _super);
+    function LoggerBuilder() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        /**
+         * Writes a log entries with specified log level.
+         *
+         * @param level Entries will be written on this level.
+         * @param messages Messages to be written.
+         */
+        _this.Log = function (level) {
+            var messages = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                messages[_i - 1] = arguments[_i];
+            }
+            return _this.log.apply(_this, [level].concat(messages));
+        };
+        /**
+         * Write a log entries with debug log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Debug = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Debug].concat(messages));
+        };
+        /**
+         * Write a log entries with information log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Info = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Information].concat(messages));
+        };
+        /**
+         * Write a log entries with warning log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Warn = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Warning].concat(messages));
+        };
+        /**
+         * Write a log entries with error log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Error = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Error].concat(messages));
+        };
+        /**
+         * Write a log entries with critical log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Critical = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Critical].concat(messages));
+        };
+        /**
+         * Write a log entries with trace log level.
+         *
+         * @param messages Messages to be written.
+         */
+        _this.Trace = function () {
+            var messages = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                messages[_i] = arguments[_i];
+            }
+            return _this.log.apply(_this, [simplr_logger_1.LogLevel.Trace].concat(messages));
+        };
+        return _this;
+    }
+    LoggerBuilder.prototype.log = function (level) {
+        var messages = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            messages[_i - 1] = arguments[_i];
+        }
+        var timestamp = Date.now();
+        if (this.Configuration.Prefix) {
+            messages = [this.Configuration.Prefix].concat(messages);
+        }
+        for (var _a = 0, _b = this.Configuration.WriteMessageHandlers; _a < _b.length; _a++) {
+            var handlerInstance = _b[_a];
+            if (simplr_logger_1.LoggerHelpers.IsLogLevelEnabled(handlerInstance.LogLevel, handlerInstance.LogLevelIsBitMask, level)) {
+                handlerInstance.Handler.HandleMessage(level, timestamp, messages);
+            }
+        }
+        return timestamp;
+    };
+    return LoggerBuilder;
+}(simplr_logger_1.LoggerRuntimeConfigurationBuilder));
+exports.LoggerBuilder = LoggerBuilder;
 
 
 /***/ })

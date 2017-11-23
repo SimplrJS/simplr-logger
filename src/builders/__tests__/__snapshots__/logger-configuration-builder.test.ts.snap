@@ -1,0 +1,589 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Configuration Methods AddWriteMessageHandler 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 8,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 1,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 1,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 2,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 2,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 17,
+      "LogLevelIsBitMask": true,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 17,
+      "LogLevelIsBitMask": true,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods AddWriteMessageHandlers 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 16,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods Override 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 32,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": "New Prefix",
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 16,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods Override 2`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 32,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": "Start prefix",
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods Override 3`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 6,
+    "LogLevelIsBitMask": true,
+  },
+  "Prefix": "Start prefix",
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 16,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods SetDefaultLogLevels 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 32,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods SetDefaultLogLevels 2`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 44,
+    "LogLevelIsBitMask": true,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 44,
+      "LogLevelIsBitMask": true,
+    },
+  ],
+}
+`;
+
+exports[`Configuration Methods SetPrefix 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": "[SimplrLogger prefix]",
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Default Configuration 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Initial Configuration 1`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": "[SimplrLogger prefix]",
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Initial Configuration 2`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 1,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 1,
+      "LogLevelIsBitMask": false,
+    },
+  ],
+}
+`;
+
+exports[`Initial Configuration 3`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 7,
+    "LogLevelIsBitMask": true,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 7,
+      "LogLevelIsBitMask": true,
+    },
+  ],
+}
+`;
+
+exports[`Initial Configuration 4`] = `
+Object {
+  "DefaultLogLevel": Object {
+    "LogLevel": 4,
+    "LogLevelIsBitMask": false,
+  },
+  "Prefix": undefined,
+  "WriteMessageHandlers": Array [
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 32,
+      "LogLevelIsBitMask": false,
+    },
+    Object {
+      "Handler": ConsoleMessageHandler {
+        "configuration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+        "defaultConfiguration": Object {
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
+          "UseColors": false,
+        },
+      },
+      "LogLevel": 3,
+      "LogLevelIsBitMask": true,
+    },
+  ],
+}
+`;
