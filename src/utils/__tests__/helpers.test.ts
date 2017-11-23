@@ -1,4 +1,4 @@
-import { LoggerHelpers, LogLevel } from "simplr-logger";
+import { LoggerHelpers, LogLevel, PrefixType } from "simplr-logger";
 
 const SHORT_STRING_LENGTH: number = 4;
 
@@ -365,5 +365,45 @@ describe("ResolveLogLevel", () => {
         expect(resolved.value).toBe(LogLevel.Information | LogLevel.Warning | LogLevel.Critical);
         expect(resolved.isBitMask).toBe(true);
         expect(resolved).toMatchSnapshot();
+    });
+});
+
+describe("ResolveLogLevelPrefix", () => {
+    test("Type None", () => {
+        const value = LoggerHelpers.ResolveLogLevelPrefix(PrefixType.None, LogLevel.Information);
+        expect(value).toBeUndefined();
+    });
+
+    test("Type Short", () => {
+        const value = LoggerHelpers.ResolveLogLevelPrefix(PrefixType.Short, LogLevel.Information);
+        expect(typeof value).toBe("string");
+        expect(value.length).toBeGreaterThan(0);
+    });
+
+    test("Type Full", () => {
+        const value = LoggerHelpers.ResolveLogLevelPrefix(PrefixType.Full, LogLevel.Information);
+        expect(typeof value).toBe("string");
+        expect(value.length).toBeGreaterThan(0);
+    });
+});
+
+describe("ResolveTimePrefix", () => {
+    const timestamp = Date.now();
+
+    test("Type None", () => {
+        const value = LoggerHelpers.ResolveTimePrefix(PrefixType.None, timestamp);
+        expect(value).toBeUndefined();
+    });
+
+    test("Type Short", () => {
+        const value = LoggerHelpers.ResolveTimePrefix(PrefixType.Short, timestamp);
+        expect(typeof value).toBe("string");
+        expect(value.length).toBeGreaterThan(0);
+    });
+
+    test("Type Full", () => {
+        const value = LoggerHelpers.ResolveTimePrefix(PrefixType.Full, timestamp);
+        expect(typeof value).toBe("string");
+        expect(value.length).toBeGreaterThan(0);
     });
 });
