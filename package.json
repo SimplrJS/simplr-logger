@@ -87,6 +87,12 @@
     "moduleNameMapper": {
       "simplr-logger": "<rootDir>/src/index"
     },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/handlers/**/*",
+      "!*",
+      "!**/__tests__/**/*"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
