@@ -1,10 +1,42 @@
 import { LoggerHelpers, LogLevel } from "simplr-logger";
 
+const SHORT_STRING_LENGTH: number = 4;
+
 describe("GetLogLevelShortString", () => {
-    test("Unknown string should be none", () => {
-        const unknown = LoggerHelpers.GetLogLevelShortString(-1);
+    test("Valid Return Value", () => {
+        const unknown: string = LoggerHelpers.GetLogLevelShortString(-1);
+        expect(typeof unknown).toBe("string");
         expect(unknown).toBe(LogLevel[LogLevel.None].toString().toLowerCase());
     });
+
+    test("Same String Length", () => {
+        const critical: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Critical);
+        expect(critical.length).toBe(SHORT_STRING_LENGTH);
+
+        const error: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Error);
+        expect(error.length).toBe(SHORT_STRING_LENGTH);
+
+        const warning: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Warning);
+        expect(warning.length).toBe(SHORT_STRING_LENGTH);
+
+        const information: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Information);
+        expect(information.length).toBe(SHORT_STRING_LENGTH);
+
+        const debug: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Debug);
+        expect(debug.length).toBe(SHORT_STRING_LENGTH);
+
+        const trace: string = LoggerHelpers.GetLogLevelShortString(LogLevel.Trace);
+        expect(trace.length).toBe(SHORT_STRING_LENGTH);
+
+        const none: string = LoggerHelpers.GetLogLevelShortString(LogLevel.None);
+        expect(none.length).toBe(SHORT_STRING_LENGTH);
+    });
+
+});
+
+test("GetLogLevelString", () => {
+    const value = LoggerHelpers.GetLogLevelString(LogLevel.Information);
+    expect(typeof value).toBe("string");
 });
 
 describe("IsLogLevelEnabled", () => {
