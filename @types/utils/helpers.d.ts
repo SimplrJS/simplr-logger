@@ -1,4 +1,4 @@
-import { LogLevel } from "simplr-logger";
+import { LogLevel, PrefixType } from "simplr-logger";
 export declare namespace Helpers {
     /**
      * Return short name of log level.
@@ -35,4 +35,18 @@ export declare namespace Helpers {
      * @param targetLogLevel Checking log level value.
      */
     function IsLogLevelEnabled(currentLogLevel: LogLevel, currentLogLevelIsBitMask: boolean, targetLogLevel: LogLevel): boolean;
+    /**
+     * Resolve log level string prefix by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param logLevel Current log level.
+     */
+    function ResolveLogLevelPrefix(prefixType: PrefixType | keyof typeof PrefixType, logLevel: LogLevel): string | undefined;
+    /**
+     * Resolve date string by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param timestamp Timestamp to resolve.
+     */
+    function ResolveTimePrefix(prefixType: PrefixType | keyof typeof PrefixType, timestamp: number): string | undefined;
 }

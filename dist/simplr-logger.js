@@ -84,13 +84,15 @@ var log_level_1 = __webpack_require__(3);
 exports.LogLevel = log_level_1.LogLevel;
 var message_handler_base_1 = __webpack_require__(4);
 exports.MessageHandlerBase = message_handler_base_1.MessageHandlerBase;
-var console_message_handler_1 = __webpack_require__(5);
+var prefix_type_1 = __webpack_require__(5);
+exports.PrefixType = prefix_type_1.PrefixType;
+var console_message_handler_1 = __webpack_require__(6);
 exports.ConsoleMessageHandler = console_message_handler_1.ConsoleMessageHandler;
-var logger_configuration_builder_1 = __webpack_require__(7);
+var logger_configuration_builder_1 = __webpack_require__(8);
 exports.LoggerConfigurationBuilder = logger_configuration_builder_1.LoggerConfigurationBuilder;
-var logger_runtime_configuration_builder_1 = __webpack_require__(8);
+var logger_runtime_configuration_builder_1 = __webpack_require__(9);
 exports.LoggerRuntimeConfigurationBuilder = logger_runtime_configuration_builder_1.LoggerRuntimeConfigurationBuilder;
-var logger_builder_1 = __webpack_require__(9);
+var logger_builder_1 = __webpack_require__(10);
 exports.LoggerBuilder = logger_builder_1.LoggerBuilder;
 
 
@@ -189,6 +191,40 @@ var Helpers;
             (currentLogLevel >= targetLogLevel);
     }
     Helpers.IsLogLevelEnabled = IsLogLevelEnabled;
+    /**
+     * Resolve log level string prefix by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param logLevel Current log level.
+     */
+    function ResolveLogLevelPrefix(prefixType, logLevel) {
+        switch (prefixType) {
+            case simplr_logger_1.PrefixType.None:
+                return undefined;
+            case simplr_logger_1.PrefixType.Short:
+                return GetLogLevelShortString(logLevel);
+            case simplr_logger_1.PrefixType.Full:
+                return GetLogLevelString(logLevel);
+        }
+    }
+    Helpers.ResolveLogLevelPrefix = ResolveLogLevelPrefix;
+    /**
+     * Resolve date string by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param timestamp Timestamp to resolve.
+     */
+    function ResolveTimePrefix(prefixType, timestamp) {
+        switch (prefixType) {
+            case simplr_logger_1.PrefixType.None:
+                return undefined;
+            case simplr_logger_1.PrefixType.Short:
+                return new Date(timestamp).toLocaleTimeString();
+            case simplr_logger_1.PrefixType.Full:
+                return new Date(timestamp).toLocaleString();
+        }
+    }
+    Helpers.ResolveTimePrefix = ResolveTimePrefix;
 })(Helpers = exports.Helpers || (exports.Helpers = {}));
 
 
@@ -253,47 +289,47 @@ exports.MessageHandlerBase = MessageHandlerBase;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var PrefixType;
+(function (PrefixType) {
+    PrefixType["None"] = "None";
+    PrefixType["Short"] = "Short";
+    PrefixType["Full"] = "Full";
+})(PrefixType = exports.PrefixType || (exports.PrefixType = {}));
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-var ansi_color_codes_1 = __webpack_require__(6);
+var ansi_color_codes_1 = __webpack_require__(7);
 var simplr_logger_1 = __webpack_require__(0);
 var ConsoleMessageHandler = /** @class */ (function (_super) {
     tslib_1.__extends(ConsoleMessageHandler, _super);
     function ConsoleMessageHandler(configuration) {
         var _this = _super.call(this) || this;
         _this.defaultConfiguration = {
-            LogLevelPrefix: ConsoleMessageHandler.PrefixTypes.short,
-            TimePrefix: ConsoleMessageHandler.PrefixTypes.short,
+            LogLevelPrefix: simplr_logger_1.PrefixType.Short,
+            TimePrefix: simplr_logger_1.PrefixType.Short,
             UseColors: typeof window === "undefined"
         };
         _this.configuration = tslib_1.__assign({}, _this.defaultConfiguration, configuration);
         return _this;
     }
-    ConsoleMessageHandler.prototype.resolveTimePrefix = function (timestamp) {
-        switch (this.configuration.TimePrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return "[" + new Date(timestamp).toLocaleTimeString() + "]";
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return "[" + new Date(timestamp).toLocaleString() + "]";
-        }
-    };
     ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorStart) {
         if (level === simplr_logger_1.LogLevel.Trace) {
             return undefined;
         }
-        var startString = this.configuration.UseColors ? colorStart : "";
-        switch (this.configuration.LogLevelPrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return "" + startString + simplr_logger_1.LoggerHelpers.GetLogLevelShortString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return "" + startString + simplr_logger_1.LoggerHelpers.GetLogLevelString(level) + ansi_color_codes_1.ANSIColorCodes.Reset;
+        var prefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.LogLevelPrefix, level);
+        if (prefix == null) {
+            return undefined;
         }
+        var colorPrefix = this.configuration.UseColors ? colorStart : "";
+        return "" + colorPrefix + prefix + ansi_color_codes_1.ANSIColorCodes.Reset;
     };
     ConsoleMessageHandler.prototype.HandleMessage = function (level, timestamp, messages) {
         var method;
@@ -337,9 +373,9 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
             }
         }
         var prefixList = [];
-        var timePrefix = this.resolveTimePrefix(timestamp);
+        var timePrefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.TimePrefix, timestamp);
         if (timePrefix != null) {
-            prefixList.push(timePrefix);
+            prefixList.push("[" + timePrefix + "]");
         }
         var logLevelPrefix = this.resolveLogLevelPrefix(level, colorStart);
         if (logLevelPrefix != null) {
@@ -356,19 +392,10 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
     return ConsoleMessageHandler;
 }(simplr_logger_1.MessageHandlerBase));
 exports.ConsoleMessageHandler = ConsoleMessageHandler;
-(function (ConsoleMessageHandler) {
-    var PrefixTypes;
-    (function (PrefixTypes) {
-        PrefixTypes["none"] = "none";
-        PrefixTypes["short"] = "short";
-        PrefixTypes["full"] = "full";
-    })(PrefixTypes = ConsoleMessageHandler.PrefixTypes || (ConsoleMessageHandler.PrefixTypes = {}));
-})(ConsoleMessageHandler = exports.ConsoleMessageHandler || (exports.ConsoleMessageHandler = {}));
-exports.ConsoleMessageHandler = ConsoleMessageHandler;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -401,7 +428,7 @@ var ANSIColorCodes;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -515,7 +542,7 @@ exports.LoggerConfigurationBuilder = LoggerConfigurationBuilder;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -543,7 +570,7 @@ exports.LoggerRuntimeConfigurationBuilder = LoggerRuntimeConfigurationBuilder;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });

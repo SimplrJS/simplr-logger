@@ -11,13 +11,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -27,13 +27,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -43,13 +43,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -59,13 +59,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -75,13 +75,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -91,13 +91,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -107,13 +107,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -123,13 +123,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -151,13 +151,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -167,13 +167,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -183,13 +183,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -211,13 +211,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -227,13 +227,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -255,13 +255,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -283,13 +283,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -299,13 +299,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -327,13 +327,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -355,13 +355,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -383,13 +383,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -411,13 +411,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -439,13 +439,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -467,13 +467,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -495,13 +495,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -523,13 +523,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -539,13 +539,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -555,13 +555,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
@@ -571,13 +571,13 @@ Object {
     Object {
       "Handler": ConsoleMessageHandler {
         "configuration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
         "defaultConfiguration": Object {
-          "LogLevelPrefix": "short",
-          "TimePrefix": "short",
+          "LogLevelPrefix": "Short",
+          "TimePrefix": "Short",
           "UseColors": false,
         },
       },
