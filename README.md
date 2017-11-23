@@ -1,5 +1,11 @@
 # Simplr Logger
 
+[![NPM version](http://img.shields.io/npm/v/simplr-logger.svg)](https://www.npmjs.com/package/simplr-logger)
+[![Build Status](https://travis-ci.org/SimplrJS/simplr-logger.svg?branch=master)](https://travis-ci.org/SimplrJS/simplr-logger)
+[![Coverage Status](https://coveralls.io/repos/github/SimplrJS/simplr-logger/badge.svg)](https://coveralls.io/github/SimplrJS/simplr-logger)
+[![dependencies Status](https://david-dm.org/simplrjs/simplr-logger/status.svg)](https://david-dm.org/simplrjs/simplr-logger)
+[![devDependencies Status](https://david-dm.org/simplrjs/simplr-logger/dev-status.svg)](https://david-dm.org/simplrjs/simplr-logger?type=dev)
+
 Simple JavaScript logger written in [TypeScript](http://typescriptlang.org) that can be used in browser or node application.
 
 The package is most useful when used with [TypeScript](http://typescriptlang.org).
