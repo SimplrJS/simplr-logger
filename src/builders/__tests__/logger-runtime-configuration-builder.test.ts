@@ -16,6 +16,12 @@ test("Same Configuration", () => {
 test("Custom Configuration", () => {
     const config = new LoggerConfigurationBuilder().SetPrefix("Old prefix").Build();
     const runtimeConfiguration = new LoggerRuntimeConfigurationBuilder(config);
-    runtimeConfiguration.UpdateConfiguration(builder => builder.SetPrefix("New prefix").Build());
+    runtimeConfiguration.UpdateConfiguration(builder => builder.SetPrefix("New prefix").Build(), true);
+    expect(runtimeConfiguration).toMatchSnapshot();
+});
+
+test("New Configuration", () => {
+    const runtimeConfiguration = new LoggerRuntimeConfigurationBuilder();
+    runtimeConfiguration.UpdateConfiguration(builder => builder.Build(), false);
     expect(runtimeConfiguration).toMatchSnapshot();
 });

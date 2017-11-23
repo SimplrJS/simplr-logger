@@ -60,6 +60,36 @@ LoggerRuntimeConfigurationBuilder {
 }
 `;
 
+exports[`New Configuration 1`] = `
+LoggerRuntimeConfigurationBuilder {
+  "Configuration": Object {
+    "DefaultLogLevel": Object {
+      "LogLevel": 4,
+      "LogLevelIsBitMask": false,
+    },
+    "Prefix": undefined,
+    "WriteMessageHandlers": Array [
+      Object {
+        "Handler": ConsoleMessageHandler {
+          "configuration": Object {
+            "LogLevelPrefix": "short",
+            "TimePrefix": "short",
+            "UseColors": false,
+          },
+          "defaultConfiguration": Object {
+            "LogLevelPrefix": "short",
+            "TimePrefix": "short",
+            "UseColors": false,
+          },
+        },
+        "LogLevel": 4,
+        "LogLevelIsBitMask": false,
+      },
+    ],
+  },
+}
+`;
+
 exports[`Same Configuration 1`] = `
 LoggerRuntimeConfigurationBuilder {
   "Configuration": Object {
