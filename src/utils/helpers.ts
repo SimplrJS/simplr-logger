@@ -1,4 +1,4 @@
-import { LogLevel } from "simplr-logger";
+import { LogLevel, PrefixType } from "simplr-logger";
 
 export namespace Helpers {
     /**
@@ -79,5 +79,39 @@ export namespace Helpers {
         return currentLogLevelIsBitMask ?
             ((currentLogLevel & targetLogLevel) === targetLogLevel) :
             (currentLogLevel >= targetLogLevel);
+    }
+
+    /**
+     * Resolve log level string prefix by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param logLevel Current log level.
+     */
+    export function ResolveLogLevelPrefix(prefixType: PrefixType | keyof typeof PrefixType, logLevel: LogLevel): string | undefined {
+        switch (prefixType) {
+            case PrefixType.None:
+                return undefined;
+            case PrefixType.Short:
+                return GetLogLevelShortString(logLevel);
+            case PrefixType.Full:
+                return GetLogLevelString(logLevel);
+        }
+    }
+
+    /**
+     * Resolve date string by prefix type.
+     *
+     * @param prefixType Prefix type enum value or string.
+     * @param timestamp Timestamp to resolve.
+     */
+    export function ResolveTimePrefix(prefixType: PrefixType | keyof typeof PrefixType, timestamp: number): string | undefined {
+        switch (prefixType) {
+            case PrefixType.None:
+                return undefined;
+            case PrefixType.Short:
+                return new Date(timestamp).toLocaleTimeString();
+            case PrefixType.Full:
+                return new Date(timestamp).toLocaleString();
+        }
     }
 }
