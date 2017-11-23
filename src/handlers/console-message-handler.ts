@@ -1,5 +1,5 @@
 import { ANSIColorCodes } from "../utils/ansi-color-codes";
-import { MessageHandlerBase, LoggerHelpers, LogLevel } from "simplr-logger";
+import { MessageHandlerBase, LoggerHelpers, LogLevel, PrefixType } from "simplr-logger";
 
 export class ConsoleMessageHandler extends MessageHandlerBase {
     constructor(configuration?: Partial<ConsoleMessageHandler.Configuration>) {
@@ -14,38 +14,23 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
     private configuration: ConsoleMessageHandler.Configuration;
 
     private defaultConfiguration: ConsoleMessageHandler.Configuration = {
-        LogLevelPrefix: ConsoleMessageHandler.PrefixTypes.short,
-        TimePrefix: ConsoleMessageHandler.PrefixTypes.short,
+        LogLevelPrefix: PrefixType.Short,
+        TimePrefix: PrefixType.Short,
         UseColors: typeof window === "undefined"
     };
-
-    private resolveTimePrefix(timestamp: number): string | undefined {
-        switch (this.configuration.TimePrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return `[${new Date(timestamp).toLocaleTimeString()}]`;
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return `[${new Date(timestamp).toLocaleString()}]`;
-        }
-    }
 
     private resolveLogLevelPrefix(level: LogLevel, colorStart: string): string | undefined {
         if (level === LogLevel.Trace) {
             return undefined;
         }
 
-        const startString = this.configuration.UseColors ? colorStart : "";
-
-        switch (this.configuration.LogLevelPrefix) {
-            case ConsoleMessageHandler.PrefixTypes.none:
-                return undefined;
-            case ConsoleMessageHandler.PrefixTypes.short:
-                return `${startString}${LoggerHelpers.GetLogLevelShortString(level)}${ANSIColorCodes.Reset}`;
-            case ConsoleMessageHandler.PrefixTypes.full:
-                return `${startString}${LoggerHelpers.GetLogLevelString(level)}${ANSIColorCodes.Reset}`;
+        const prefix = LoggerHelpers.ResolveLogLevelPrefix(this.configuration.LogLevelPrefix, level);
+        if (prefix == null) {
+            return undefined;
         }
+        const colorPrefix = this.configuration.UseColors ? colorStart : "";
 
+        return `${colorPrefix}${prefix}${ANSIColorCodes.Reset}`;
     }
 
     public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
@@ -94,9 +79,9 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
 
         const prefixList: string[] = [];
 
-        const timePrefix = this.resolveTimePrefix(timestamp);
+        const timePrefix = LoggerHelpers.ResolveLogLevelPrefix(this.configuration.TimePrefix, timestamp);
         if (timePrefix != null) {
-            prefixList.push(timePrefix);
+            prefixList.push(`[${timePrefix}]`);
         }
 
         const logLevelPrefix = this.resolveLogLevelPrefix(level, colorStart);
@@ -114,15 +99,9 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
 }
 
 export namespace ConsoleMessageHandler {
-    export enum PrefixTypes {
-        none = "none",
-        short = "short",
-        full = "full"
-    }
-
     export interface Configuration {
-        LogLevelPrefix: PrefixTypes | keyof typeof PrefixTypes;
-        TimePrefix: PrefixTypes | keyof typeof PrefixTypes;
+        LogLevelPrefix: PrefixType | keyof typeof PrefixType;
+        TimePrefix: PrefixType | keyof typeof PrefixType;
         UseColors: boolean;
     }
 }
