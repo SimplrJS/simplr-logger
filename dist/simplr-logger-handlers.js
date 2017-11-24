@@ -143,7 +143,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
         get: function () {
             return {
                 LogLevelPrefix: simplr_logger_1.PrefixType.Short,
-                TimePrefix: simplr_logger_1.PrefixType.Short,
+                TimePrefix: simplr_logger_1.PrefixType.Full,
                 IsServerSide: simplr_logger_1.LoggerHelpers.IsServerSide()
             };
         },
