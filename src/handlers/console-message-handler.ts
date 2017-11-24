@@ -13,11 +13,13 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
 
     private configuration: ConsoleMessageHandler.Configuration;
 
-    private defaultConfiguration: ConsoleMessageHandler.Configuration = {
-        LogLevelPrefix: PrefixType.Short,
-        TimePrefix: PrefixType.Short,
-        UseColors: typeof window === "undefined"
-    };
+    private get defaultConfiguration(): ConsoleMessageHandler.Configuration {
+        return {
+            LogLevelPrefix: PrefixType.Short,
+            TimePrefix: PrefixType.Short,
+            UseColors: typeof window === "undefined"
+        };
+    }
 
     private resolveLogLevelPrefix(level: LogLevel, colorStart: string): string | undefined {
         if (level === LogLevel.Trace) {
