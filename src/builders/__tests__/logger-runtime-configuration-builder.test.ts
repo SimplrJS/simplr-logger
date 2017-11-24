@@ -7,7 +7,7 @@ test("Default Configuration", () => {
 });
 
 test("Same Configuration", () => {
-    const config = new LoggerConfigurationBuilder().SetDefaultLogLevels(LogLevel.Trace).Build();
+    const config = new LoggerConfigurationBuilder().SetDefaultLogLevel(LogLevel.Trace).Build();
     const runtimeConfiguration = new LoggerRuntimeConfigurationBuilder(config);
     runtimeConfiguration.UpdateConfiguration(builder => builder.Build());
     expect(runtimeConfiguration).toMatchSnapshot();

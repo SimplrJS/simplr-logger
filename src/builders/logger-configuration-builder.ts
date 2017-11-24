@@ -80,10 +80,10 @@ export class LoggerConfigurationBuilder {
     /**
      * Set logger default log level.
      *
-     * @param logLevels LogLevel value or custom list of LogLevels.
+     * @param logLevel LogLevel value or custom list of LogLevels.
      */
-    public SetDefaultLogLevels(logLevels: LogLevel | LogLevel[]): this {
-        const { isBitMask, value } = LoggerHelpers.ResolveLogLevel(logLevels);
+    public SetDefaultLogLevel(logLevel: LogLevel | LogLevel[]): this {
+        const { isBitMask, value } = LoggerHelpers.ResolveLogLevel(logLevel);
         this.configuration.DefaultLogLevel = {
             LogLevel: value,
             LogLevelIsBitMask: isBitMask

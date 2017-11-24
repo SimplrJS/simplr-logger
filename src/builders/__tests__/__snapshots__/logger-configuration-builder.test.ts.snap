@@ -316,7 +316,7 @@ Object {
 }
 `;
 
-exports[`Configuration Methods SetDefaultLogLevels 1`] = `
+exports[`Configuration Methods SetDefaultLogLevel 1`] = `
 Object {
   "DefaultLogLevel": Object {
     "LogLevel": 32,
@@ -344,7 +344,7 @@ Object {
 }
 `;
 
-exports[`Configuration Methods SetDefaultLogLevels 2`] = `
+exports[`Configuration Methods SetDefaultLogLevel 2`] = `
 Object {
   "DefaultLogLevel": Object {
     "LogLevel": 44,

@@ -33,8 +33,11 @@ import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel } from "simplr-logg
 import { FileMessageHandler, ConsoleMessageHandler } from "simplr-logger/handlers";
 
 const config = new LoggerConfigurationBuilder()
-    .SetLogLevel(LogLevel.Trace)
-    .AddWriteMessageHandlers([new ConsoleMessageHandler(), new FileMessageHandler("./logs.txt")])
+    .SetDefaultLogLevel(LogLevel.Trace)
+    .AddWriteMessageHandlers([
+        { Handler: new ConsoleMessageHandler() },
+        { Handler: new FileMessageHandler("./logs.txt") }]
+    )
     .Build();
 
 const logger = new LoggerBuilder(config);
@@ -43,11 +46,18 @@ const logger = new LoggerBuilder(config);
 #### With simple object
 
 ```ts
-import { LoggerBuilder, LoggerConfigurationBuilder, LogLevel, ConsoleMessageHandler } from "simplr-logger";
+import { LoggerBuilder, LogLevel, ConsoleMessageHandler } from "simplr-logger";
 
 const logger = new LoggerBuilder({
-    LogLevel: LogLevel.Trace,
-    WriteMessageHandlers: [new ConsoleMessageHandler()]
+    DefaultLogLevel: {
+        LogLevel: LogLevel.Trace,
+        LogLevelIsBitMask: false
+    },
+    WriteMessageHandlers: [{
+        Handler: new ConsoleMessageHandler(),
+        LogLevel: LogLevel.Critical | LogLevel.Debug,
+        LogLevelIsBitMask: true
+    }]
 });
 ```
 
@@ -61,6 +71,7 @@ logger.Debug("Debug", "message");
 logger.Error("Error", "message");
 logger.Info("Info", "message");
 logger.Warn("Warn", "message");
+logger.Trace("message", "with trace");
 ```
 
 #### Logging with log level
@@ -70,9 +81,31 @@ logger.Log(LogLevel.Information, "Info message");
 logger.Log(LogLevel.Critical, new Error("Critical error"));
 ```
 
+#### Updating configuration
+
+```ts
+// Using old configuration
+logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build());
+
+// Or with default configuration
+logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(), false);
+```
+
 ## API
 
- TODO
+### [LogLevel](./src/abstractions/log-level.ts)
+
+|     Name    | Value | Description                                                                                                                                                                                          |
+|-------------|:-----:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     None    |   0   | Not used for writing log messages. Specifies that a logging category should not write any messages.                                                                                                  |
+|   Critical  |   1   | Logs that describe an unrecoverable application or system crash, or a catastrophic failure that requires immediate attention. |                                                                      |
+|    Error    |   2   | Logs that highlight when the current flow of execution is stopped due to a failure. These should indicate a failure in the current activity, not an application-wide failure.                        |
+|   Warning   |   4   | Logs that highlight an abnormal or unexpected event in the application flow, but do not otherwise cause the application execution to stop.                                                           |
+| Information |   8   | Logs that track the general flow of the application. These logs should have long-term value.                                                                                                         |
+|    Debug    |   16  | Logs that are used for interactive investigation during development. These logs should primarily contain information useful for debugging and have no long-term value.                               |
+|    Trace    |   32  | Logs that contain the most detailed messages. These messages may contain sensitive application data. These messages are disabled by default and should never be enabled in a production environment. |
+
+TODO
 
 ## License
 
