@@ -47,15 +47,15 @@ describe("Configuration Methods", () => {
         expect(prefixConfig).toMatchSnapshot();
     });
 
-    test("SetDefaultLogLevels", () => {
+    test("SetDefaultLogLevel", () => {
         const logLevelConfig = new LoggerConfigurationBuilder()
-            .SetDefaultLogLevels(LogLevel.Trace)
+            .SetDefaultLogLevel(LogLevel.Trace)
             .Build();
 
         expect(logLevelConfig).toMatchSnapshot();
 
         const logLevelBitMaskConfig = new LoggerConfigurationBuilder()
-            .SetDefaultLogLevels([LogLevel.Trace, LogLevel.Information, LogLevel.Warning])
+            .SetDefaultLogLevel([LogLevel.Trace, LogLevel.Information, LogLevel.Warning])
             .Build();
 
         expect(logLevelBitMaskConfig).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe("Configuration Methods", () => {
             .SetPrefix("Start prefix")
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Debug })
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Trace })
-            .SetDefaultLogLevels(LogLevel.Trace)
+            .SetDefaultLogLevel(LogLevel.Trace)
             .Override({ Prefix: "New Prefix" })
             .Build();
 
@@ -112,7 +112,7 @@ describe("Configuration Methods", () => {
             .SetPrefix("Start prefix")
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Debug })
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Trace })
-            .SetDefaultLogLevels(LogLevel.Trace)
+            .SetDefaultLogLevel(LogLevel.Trace)
             .Override({ WriteMessageHandlers: [] })
             .Build();
 
@@ -122,7 +122,7 @@ describe("Configuration Methods", () => {
             .SetPrefix("Start prefix")
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Debug })
             .AddWriteMessageHandler({ Handler: new ConsoleMessageHandler(), LogLevel: LogLevel.Trace })
-            .SetDefaultLogLevels(LogLevel.Trace)
+            .SetDefaultLogLevel(LogLevel.Trace)
             .Override({ DefaultLogLevel: { LogLevel: LogLevel.None | LogLevel.Error | LogLevel.Warning, LogLevelIsBitMask: true } })
             .Build();
 

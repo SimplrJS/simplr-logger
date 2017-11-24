@@ -7,7 +7,7 @@ test("Without Configuration", () => {
 
 test("With Prefix", () => {
     const config = new LoggerConfigurationBuilder()
-        .SetDefaultLogLevels(LogLevel.None)
+        .SetDefaultLogLevel(LogLevel.None)
         .SetPrefix("[Tests]")
         .Build();
 
@@ -17,7 +17,7 @@ test("With Prefix", () => {
 
 describe("Methods", () => {
     const config = new LoggerConfigurationBuilder()
-        .SetDefaultLogLevels(LogLevel.None)
+        .SetDefaultLogLevel(LogLevel.None)
         .Build();
 
     const Logger = new LoggerBuilder(config);
