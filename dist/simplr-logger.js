@@ -80,19 +80,19 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __webpack_require__(2);
 exports.LoggerHelpers = helpers_1.Helpers;
-var log_level_1 = __webpack_require__(3);
+var log_level_1 = __webpack_require__(4);
 exports.LogLevel = log_level_1.LogLevel;
-var message_handler_base_1 = __webpack_require__(4);
+var message_handler_base_1 = __webpack_require__(5);
 exports.MessageHandlerBase = message_handler_base_1.MessageHandlerBase;
-var prefix_type_1 = __webpack_require__(5);
+var prefix_type_1 = __webpack_require__(6);
 exports.PrefixType = prefix_type_1.PrefixType;
-var console_message_handler_1 = __webpack_require__(6);
+var console_message_handler_1 = __webpack_require__(7);
 exports.ConsoleMessageHandler = console_message_handler_1.ConsoleMessageHandler;
-var logger_configuration_builder_1 = __webpack_require__(8);
+var logger_configuration_builder_1 = __webpack_require__(9);
 exports.LoggerConfigurationBuilder = logger_configuration_builder_1.LoggerConfigurationBuilder;
-var logger_runtime_configuration_builder_1 = __webpack_require__(9);
+var logger_runtime_configuration_builder_1 = __webpack_require__(10);
 exports.LoggerRuntimeConfigurationBuilder = logger_runtime_configuration_builder_1.LoggerRuntimeConfigurationBuilder;
-var logger_builder_1 = __webpack_require__(10);
+var logger_builder_1 = __webpack_require__(11);
 exports.LoggerBuilder = logger_builder_1.LoggerBuilder;
 
 
@@ -106,10 +106,17 @@ module.exports = require("tslib");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-Object.defineProperty(exports, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(process) {Object.defineProperty(exports, "__esModule", { value: true });
 var simplr_logger_1 = __webpack_require__(0);
 var Helpers;
 (function (Helpers) {
+    /**
+     * Check if running on server side environment.
+     */
+    function IsServerSide() {
+        return typeof process !== "undefined";
+    }
+    Helpers.IsServerSide = IsServerSide;
     /**
      * Return short name of log level.
      *
@@ -227,9 +234,200 @@ var Helpers;
     Helpers.ResolveTimePrefix = ResolveTimePrefix;
 })(Helpers = exports.Helpers || (exports.Helpers = {}));
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -275,7 +473,7 @@ var LogLevel;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -288,7 +486,7 @@ exports.MessageHandlerBase = MessageHandlerBase;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -301,25 +499,31 @@ var PrefixType;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-var ansi_color_codes_1 = __webpack_require__(7);
+var ansi_color_codes_1 = __webpack_require__(8);
 var simplr_logger_1 = __webpack_require__(0);
 var ConsoleMessageHandler = /** @class */ (function (_super) {
     tslib_1.__extends(ConsoleMessageHandler, _super);
     function ConsoleMessageHandler(configuration) {
         var _this = _super.call(this) || this;
-        _this.defaultConfiguration = {
-            LogLevelPrefix: simplr_logger_1.PrefixType.Short,
-            TimePrefix: simplr_logger_1.PrefixType.Short,
-            UseColors: typeof window === "undefined"
-        };
         _this.configuration = tslib_1.__assign({}, _this.defaultConfiguration, configuration);
         return _this;
     }
+    Object.defineProperty(ConsoleMessageHandler.prototype, "defaultConfiguration", {
+        get: function () {
+            return {
+                LogLevelPrefix: simplr_logger_1.PrefixType.Short,
+                TimePrefix: simplr_logger_1.PrefixType.Short,
+                UseColors: typeof window === "undefined"
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
     ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorStart) {
         if (level === simplr_logger_1.LogLevel.Trace) {
             return undefined;
@@ -392,7 +596,7 @@ exports.ConsoleMessageHandler = ConsoleMessageHandler;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -425,7 +629,7 @@ var ANSIColorCodes;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -539,7 +743,7 @@ exports.LoggerConfigurationBuilder = LoggerConfigurationBuilder;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -567,7 +771,7 @@ exports.LoggerRuntimeConfigurationBuilder = LoggerRuntimeConfigurationBuilder;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
