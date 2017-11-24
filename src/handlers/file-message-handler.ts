@@ -80,7 +80,7 @@ export class FileMessageHandler extends MessageHandlerBase {
             prefixList.push(logLevelPrefix);
         }
 
-        const prefixString: string = prefixList.length > 0 ? `${prefixList.join(" ")}: ` : "";
+        const prefixString: string = (prefixList.length > 0) ? `${prefixList.join(" ")}: ` : "";
 
         writeStream.write(`${prefixString}${formattedMessages.join(" ")}${this.EOL}`);
     }

@@ -181,7 +181,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
         if (logLevelPrefix != null) {
             prefixList.push(logLevelPrefix);
         }
-        var prefixString = prefixList.length > 0 ? prefixList.join(" ") + ": " : "";
+        var prefixString = (prefixList.length > 0) ? prefixList.join(" ") + ": " : "";
         writeStream.write("" + prefixString + formattedMessages.join(" ") + this.EOL);
     };
     FileMessageHandler.prototype.getWriteStream = function () {
