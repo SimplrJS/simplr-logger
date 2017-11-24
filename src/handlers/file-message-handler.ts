@@ -28,7 +28,7 @@ export class FileMessageHandler extends MessageHandlerBase {
     private get defaultConfiguration(): FileMessageHandler.Configuration {
         return {
             LogLevelPrefix: PrefixType.Short,
-            TimePrefix: PrefixType.Short,
+            TimePrefix: PrefixType.Full,
             IsServerSide: LoggerHelpers.IsServerSide()
         };
     }
