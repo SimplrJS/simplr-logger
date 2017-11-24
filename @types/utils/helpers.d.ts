@@ -1,6 +1,10 @@
 import { LogLevel, PrefixType } from "simplr-logger";
 export declare namespace Helpers {
     /**
+     * Check if running on server side environment.
+     */
+    function IsServerSide(): boolean;
+    /**
      * Return short name of log level.
      *
      * @param logLevel Log level value.

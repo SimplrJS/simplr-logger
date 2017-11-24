@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -89,21 +89,26 @@ module.exports = require("simplr-logger");
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("fs");
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("fs");
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(4), exports);
+
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(5), exports);
+var simplr_logger_1 = __webpack_require__(1);
+exports.ConsoleMessageHandler = simplr_logger_1.ConsoleMessageHandler;
+var file_message_handler_1 = __webpack_require__(5);
+exports.FileMessageHandler = file_message_handler_1.FileMessageHandler;
 
 
 /***/ }),
@@ -111,46 +116,33 @@ tslib_1.__exportStar(__webpack_require__(5), exports);
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var simplr_logger_1 = __webpack_require__(1);
-exports.ConsoleMessageHandler = simplr_logger_1.ConsoleMessageHandler;
-var file_message_handler_1 = __webpack_require__(6);
-exports.FileMessageHandler = file_message_handler_1.FileMessageHandler;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
 var simplr_logger_1 = __webpack_require__(1);
 var FileMessageHandler = /** @class */ (function (_super) {
     tslib_1.__extends(FileMessageHandler, _super);
-    function FileMessageHandler(filePathName, isServerSide) {
+    function FileMessageHandler(filePathName, configuration) {
         var _this = _super.call(this) || this;
-        _this.isServerSide = isServerSide;
         // IMPORTANT: The value must be changed after files structure were updated!
         _this.handleMessageStackCount = 4;
-        if (_this.isServerSide == null) {
-            try {
-                // tslint:disable-next-line:no-require-imports no-unused-expression
-                __webpack_require__(7);
-                _this.isServerSide = true;
-            }
-            catch (_a) {
-                _this.isServerSide = false;
-            }
-        }
-        if (_this.isServerSide) {
-            // tslint:disable-next-line:no-require-imports
-            var normalize = __webpack_require__(2).normalize;
-            _this.filePathName = normalize(filePathName);
+        _this.configuration = tslib_1.__assign({}, _this.defaultConfiguration, configuration);
+        if (!_this.configuration.IsServerSide) {
             _this.ensureDirectory();
         }
         return _this;
     }
+    Object.defineProperty(FileMessageHandler.prototype, "defaultConfiguration", {
+        get: function () {
+            return {
+                LogLevelPrefix: simplr_logger_1.PrefixType.Short,
+                TimePrefix: simplr_logger_1.PrefixType.Short,
+                IsServerSide: simplr_logger_1.LoggerHelpers.IsServerSide()
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
     FileMessageHandler.prototype.HandleMessage = function (level, timestamp, messages) {
-        if (!this.isServerSide) {
+        if (!this.configuration.IsServerSide) {
             return;
         }
         var writeStream = this.getWriteStream();
@@ -180,8 +172,17 @@ var FileMessageHandler = /** @class */ (function (_super) {
             var stackString = "\n" + stack.split("\n").slice(this.handleMessageStackCount, stack.length).join("\n");
             formattedMessages.push(stackString);
         }
-        var datePrefix = "[" + new Date(timestamp).toLocaleString() + "]";
-        writeStream.write(datePrefix + " " + simplr_logger_1.LoggerHelpers.GetLogLevelShortString(level) + ": " + formattedMessages.join(" ") + this.EOL);
+        var prefixList = [];
+        var timePrefix = simplr_logger_1.LoggerHelpers.ResolveTimePrefix(this.configuration.TimePrefix, timestamp);
+        if (timePrefix != null) {
+            prefixList.push("[" + timePrefix + "]");
+        }
+        var logLevelPrefix = simplr_logger_1.LoggerHelpers.ResolveLogLevelPrefix(this.configuration.LogLevelPrefix, level);
+        if (logLevelPrefix != null) {
+            prefixList.push(logLevelPrefix);
+        }
+        var prefixString = (prefixList.length > 0) ? prefixList.join(" ") + ": " : "";
+        writeStream.write("" + prefixString + formattedMessages.join(" ") + this.EOL);
     };
     FileMessageHandler.prototype.getWriteStream = function () {
         var _this = this;
@@ -189,7 +190,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
             return this.writeStream;
         }
         // tslint:disable-next-line:no-require-imports
-        var fs = __webpack_require__(3);
+        var fs = __webpack_require__(2);
         this.writeStream = fs.createWriteStream(this.filePathName, { flags: "a" });
         this.writeStream.on("close", function () {
             _this.writeStream = undefined;
@@ -202,7 +203,7 @@ var FileMessageHandler = /** @class */ (function (_super) {
     Object.defineProperty(FileMessageHandler.prototype, "EOL", {
         get: function () {
             // tslint:disable-next-line:no-require-imports
-            var EOL = __webpack_require__(8).EOL;
+            var EOL = __webpack_require__(6).EOL;
             return EOL;
         },
         enumerable: true,
@@ -210,9 +211,9 @@ var FileMessageHandler = /** @class */ (function (_super) {
     });
     FileMessageHandler.prototype.ensureDirectory = function () {
         // tslint:disable-next-line:no-require-imports
-        var path = __webpack_require__(2);
+        var path = __webpack_require__(7);
         // tslint:disable-next-line:no-require-imports
-        var fs = __webpack_require__(3);
+        var fs = __webpack_require__(2);
         var dir = path.dirname(this.filePathName);
         var isAbsolute = (dir[0] !== path.sep && path.isAbsolute(dir));
         var dirList = dir.split(path.sep);
@@ -237,16 +238,16 @@ exports.FileMessageHandler = FileMessageHandler;
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("process");
-
-/***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
 
 /***/ })
 /******/ ]);

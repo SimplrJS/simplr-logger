@@ -16,11 +16,6 @@ LoggerRuntimeConfigurationBuilder {
             "TimePrefix": "Short",
             "UseColors": false,
           },
-          "defaultConfiguration": Object {
-            "LogLevelPrefix": "Short",
-            "TimePrefix": "Short",
-            "UseColors": false,
-          },
         },
         "LogLevel": 4,
         "LogLevelIsBitMask": false,
@@ -42,11 +37,6 @@ LoggerRuntimeConfigurationBuilder {
       Object {
         "Handler": ConsoleMessageHandler {
           "configuration": Object {
-            "LogLevelPrefix": "Short",
-            "TimePrefix": "Short",
-            "UseColors": false,
-          },
-          "defaultConfiguration": Object {
             "LogLevelPrefix": "Short",
             "TimePrefix": "Short",
             "UseColors": false,
@@ -76,11 +66,6 @@ LoggerRuntimeConfigurationBuilder {
             "TimePrefix": "Short",
             "UseColors": false,
           },
-          "defaultConfiguration": Object {
-            "LogLevelPrefix": "Short",
-            "TimePrefix": "Short",
-            "UseColors": false,
-          },
         },
         "LogLevel": 4,
         "LogLevelIsBitMask": false,
@@ -102,11 +87,6 @@ LoggerRuntimeConfigurationBuilder {
       Object {
         "Handler": ConsoleMessageHandler {
           "configuration": Object {
-            "LogLevelPrefix": "Short",
-            "TimePrefix": "Short",
-            "UseColors": false,
-          },
-          "defaultConfiguration": Object {
             "LogLevelPrefix": "Short",
             "TimePrefix": "Short",
             "UseColors": false,

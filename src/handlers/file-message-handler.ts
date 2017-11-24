@@ -1,39 +1,40 @@
-import { MessageHandlerBase, LogLevel, LoggerHelpers } from "simplr-logger";
+import { MessageHandlerBase, LogLevel, LoggerHelpers, PrefixType } from "simplr-logger";
 
 import * as pathTypesOnly from "path";
 import * as fsTypesOnly from "fs";
 import * as osTypesOnly from "os";
-import * as processTypesOnly from "process";
 type WriteStream = fsTypesOnly.WriteStream;
 
 export class FileMessageHandler extends MessageHandlerBase {
-    constructor(filePathName: string, private isServerSide?: boolean) {
+    constructor(filePathName: string, configuration?: Partial<FileMessageHandler.Configuration>) {
         super();
 
-        if (this.isServerSide == null) {
-            try {
-                // tslint:disable-next-line:no-require-imports no-unused-expression
-                require("process") as typeof processTypesOnly;
-                this.isServerSide = true;
-            } catch {
-                this.isServerSide = false;
-            }
-        }
+        this.configuration = {
+            ...this.defaultConfiguration,
+            ...configuration
+        };
 
-        if (this.isServerSide) {
-            // tslint:disable-next-line:no-require-imports
-            const { normalize } = require("path") as typeof pathTypesOnly;
-            this.filePathName = normalize(filePathName);
+        if (!this.configuration.IsServerSide) {
             this.ensureDirectory();
         }
     }
     private filePathName: string;
 
+    private configuration: FileMessageHandler.Configuration;
+
+    private get defaultConfiguration(): FileMessageHandler.Configuration {
+        return {
+            LogLevelPrefix: PrefixType.Short,
+            TimePrefix: PrefixType.Short,
+            IsServerSide: LoggerHelpers.IsServerSide()
+        };
+    }
+
     // IMPORTANT: The value must be changed after files structure were updated!
     private readonly handleMessageStackCount: number = 4;
 
     public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
-        if (!this.isServerSide) {
+        if (!this.configuration.IsServerSide) {
             return;
         }
 
@@ -67,8 +68,21 @@ export class FileMessageHandler extends MessageHandlerBase {
             formattedMessages.push(stackString);
         }
 
-        const datePrefix: string = `[${new Date(timestamp).toLocaleString()}]`;
-        writeStream.write(`${datePrefix} ${LoggerHelpers.GetLogLevelShortString(level)}: ${formattedMessages.join(" ")}${this.EOL}`);
+        const prefixList: string[] = [];
+
+        const timePrefix = LoggerHelpers.ResolveTimePrefix(this.configuration.TimePrefix, timestamp);
+        if (timePrefix != null) {
+            prefixList.push(`[${timePrefix}]`);
+        }
+
+        const logLevelPrefix = LoggerHelpers.ResolveLogLevelPrefix(this.configuration.LogLevelPrefix, level);
+        if (logLevelPrefix != null) {
+            prefixList.push(logLevelPrefix);
+        }
+
+        const prefixString: string = (prefixList.length > 0) ? `${prefixList.join(" ")}: ` : "";
+
+        writeStream.write(`${prefixString}${formattedMessages.join(" ")}${this.EOL}`);
     }
 
     private writeStream: WriteStream | undefined;
@@ -123,5 +137,12 @@ export class FileMessageHandler extends MessageHandlerBase {
             }
         }
     }
+}
 
+export namespace FileMessageHandler {
+    export interface Configuration {
+        LogLevelPrefix: PrefixType | keyof typeof PrefixType;
+        TimePrefix: PrefixType | keyof typeof PrefixType;
+        IsServerSide?: boolean;
+    }
 }

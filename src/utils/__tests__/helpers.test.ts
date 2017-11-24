@@ -407,3 +407,8 @@ describe("ResolveTimePrefix", () => {
         expect(value.length).toBeGreaterThan(0);
     });
 });
+
+describe("IsServerSide", () => {
+    const value = LoggerHelpers.IsServerSide();
+    expect(typeof value).toBe("boolean");
+});
