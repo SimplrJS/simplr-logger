@@ -26,9 +26,9 @@ export declare class LoggerConfigurationBuilder {
     /**
      * Set logger default log level.
      *
-     * @param logLevels LogLevel value or custom list of LogLevels.
+     * @param logLevel LogLevel value or custom list of LogLevels.
      */
-    SetDefaultLogLevels(logLevels: LogLevel | LogLevel[]): this;
+    SetDefaultLogLevel(logLevel: LogLevel | LogLevel[]): this;
     /**
      * Set the first message in messages list.
      *

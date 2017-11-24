@@ -490,10 +490,10 @@ var LoggerConfigurationBuilder = /** @class */ (function () {
     /**
      * Set logger default log level.
      *
-     * @param logLevels LogLevel value or custom list of LogLevels.
+     * @param logLevel LogLevel value or custom list of LogLevels.
      */
-    LoggerConfigurationBuilder.prototype.SetDefaultLogLevels = function (logLevels) {
-        var _a = simplr_logger_1.LoggerHelpers.ResolveLogLevel(logLevels), isBitMask = _a.isBitMask, value = _a.value;
+    LoggerConfigurationBuilder.prototype.SetDefaultLogLevel = function (logLevel) {
+        var _a = simplr_logger_1.LoggerHelpers.ResolveLogLevel(logLevel), isBitMask = _a.isBitMask, value = _a.value;
         this.configuration.DefaultLogLevel = {
             LogLevel: value,
             LogLevelIsBitMask: isBitMask
