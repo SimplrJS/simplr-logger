@@ -14,7 +14,10 @@ export class FileMessageHandler extends MessageHandlerBase {
             ...configuration
         };
 
-        if (!this.configuration.IsServerSide) {
+        if (this.configuration.IsServerSide) {
+            // tslint:disable-next-line:no-require-imports
+            const { normalize } = require("path") as typeof pathTypesOnly;
+            this.filePathName = normalize(filePathName);
             this.ensureDirectory();
         }
     }
