@@ -62,14 +62,11 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
                 colorStart += ANSIColorCodes.Bright + ANSIColorCodes.FgYellow;
                 break;
             }
-            case LogLevel.Debug: {
-                method = console.debug;
-                break;
-            }
             case LogLevel.Trace: {
                 method = console.trace;
                 break;
             }
+            case LogLevel.Debug:
             default: {
                 // Fallback to console.log method
                 method = console.log;

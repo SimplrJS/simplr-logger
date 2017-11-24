@@ -358,14 +358,11 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
                 colorStart += ansi_color_codes_1.ANSIColorCodes.Bright + ansi_color_codes_1.ANSIColorCodes.FgYellow;
                 break;
             }
-            case simplr_logger_1.LogLevel.Debug: {
-                method = console.debug;
-                break;
-            }
             case simplr_logger_1.LogLevel.Trace: {
                 method = console.trace;
                 break;
             }
+            case simplr_logger_1.LogLevel.Debug:
             default: {
                 // Fallback to console.log method
                 method = console.log;
