@@ -61,6 +61,25 @@ const logger = new LoggerBuilder({
 });
 ```
 
+### Creating logger handler
+
+```ts
+import { MessageHandlerBase, LogLevel, LoggerBuilder, LoggerConfigurationBuilder } from "simplr-logger";
+
+class MyMessageHandler extends MessageHandlerBase {
+    public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
+        console.log(...messages);
+    }
+}
+
+const config = new LoggerConfigurationBuilder()
+    .AddWriteMessageHandler({ Handler: new MyMessageHandler(), LogLevel: LogLevel.Trace })
+    .Build();
+
+const logger = new LoggerBuilder(config);
+
+```
+
 ### Using logger
 
 #### Logging with methods
