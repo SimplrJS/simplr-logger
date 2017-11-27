@@ -20,7 +20,7 @@ export declare class LoggerConfigurationBuilder {
      * Add a list of write message handlers.
      *
      * @param handlers Write message handlers list.
-     * @param defaultLogLevel Default log level only for this list of handler.
+     * @param defaultLogLevel Default log level only for this list of handlers.
      */
     AddWriteMessageHandlers(handlers: WriteMessageHandlerBuilder[], defaultLogLevel?: LogLevel | LogLevel[]): this;
     /**
