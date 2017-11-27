@@ -128,8 +128,8 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 
 | Name                  | Default value                                                              | Description                                                        |
 |-----------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------|
-|  WriteMessageHandlers | `[ new ConsoleMessageHandler() ]`                                          | Default message handlers list. ⁽¹⁾                                 |
-|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`                 | Default log level.                                                 |
+|  WriteMessageHandlers | `[{ Handler: new ConsoleMessageHandler() }]`                               | Message handlers list. ⁽¹⁾                                         |
+|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`                 | Log level or log levels in bit mask value.                         |
 |  Prefix               | `undefined`                                                                | Custom message, which will be injected into the start of messages. |
 
 `(1)` - The default value is only available if configuration property is not set.
