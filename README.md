@@ -61,6 +61,25 @@ const logger = new LoggerBuilder({
 });
 ```
 
+### Creating logger handler
+
+```ts
+import { MessageHandlerBase, LogLevel, LoggerBuilder, LoggerConfigurationBuilder } from "simplr-logger";
+
+class MyMessageHandler extends MessageHandlerBase {
+    public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
+        console.log(...messages);
+    }
+}
+
+const config = new LoggerConfigurationBuilder()
+    .AddWriteMessageHandler({ Handler: new MyMessageHandler(), LogLevel: LogLevel.Trace })
+    .Build();
+
+const logger = new LoggerBuilder(config);
+
+```
+
 ### Using logger
 
 #### Logging with methods
@@ -105,7 +124,15 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 |    Debug    |   16  | Logs that are used for interactive investigation during development. These logs should primarily contain information useful for debugging and have no long-term value.                               |
 |    Trace    |   32  | Logs that contain the most detailed messages. These messages may contain sensitive application data. These messages are disabled by default and should never be enabled in a production environment. |
 
-TODO
+### Configuration
+
+| Name                  | Default value                                                              | Description                                                        |
+|-----------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------|
+|  WriteMessageHandlers | `[{ Handler: new ConsoleMessageHandler() }]`                               | Message handlers list. ⁽¹⁾                                         |
+|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`                 | Log level or log levels in bit mask value.                         |
+|  Prefix               | `undefined`                                                                | Custom message, which will be injected into the start of messages. |
+
+`(1)` - The default value is only available if configuration property is not set.
 
 ## License
 
