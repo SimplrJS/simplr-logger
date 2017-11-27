@@ -126,11 +126,11 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 
 ### Configuration
 
-| Name                  | Default value                                                            | Description                                                        |
-|-----------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------|
-|  WriteMessageHandlers | `[ [ConsoleMessageHandler](./src/handlers/console-message-handler.ts) ]` | ⁽¹⁾ Default message handlers list.                                 |
-|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`               | Default log level.                                                 |
-|  Prefix               | `undefined`                                                              | Custom message, which will be injected into the start of messages. |
+| Name                  | Default value                                                              | Description                                                        |
+|-----------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------|
+|  WriteMessageHandlers | `[` [ConsoleMessageHandler](./src/handlers/console-message-handler.ts) `]` | Default message handlers list. ⁽¹⁾                                 |
+|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`                 | Default log level.                                                 |
+|  Prefix               | `undefined`                                                                | Custom message, which will be injected into the start of messages. |
 
 `(1)` - The default value is only available if configuration property is not set.
 
