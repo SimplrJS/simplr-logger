@@ -134,8 +134,6 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 
 `(1)` - The default value is only available if configuration property is not set.
 
-TODO
-
 ## License
 
 Released under the [MIT license](LICENSE).
