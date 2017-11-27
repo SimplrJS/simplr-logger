@@ -124,6 +124,16 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 |    Debug    |   16  | Logs that are used for interactive investigation during development. These logs should primarily contain information useful for debugging and have no long-term value.                               |
 |    Trace    |   32  | Logs that contain the most detailed messages. These messages may contain sensitive application data. These messages are disabled by default and should never be enabled in a production environment. |
 
+### Configuration
+
+| Name                  | Default value                                                            | Description                                                        |
+|-----------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------|
+|  WriteMessageHandlers | `[ [ConsoleMessageHandler](./src/handlers/console-message-handler.ts) ]` | ⁽¹⁾ Default message handlers list.                                 |
+|  DefaultLogLevel      | `{ LogLevel: LogLevel.Warning, LogLevelIsBitMask: false }`               | Default log level.                                                 |
+|  Prefix               | `undefined`                                                              | Custom message, which will be injected into the start of messages. |
+
+`(1)` - The default value is only available if configuration property is not set.
+
 TODO
 
 ## License
