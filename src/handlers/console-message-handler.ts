@@ -21,7 +21,7 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
         };
     }
 
-    private resolveLogLevelPrefix(level: LogLevel, colorStart: string): string | undefined {
+    private resolveLogLevelPrefix(level: LogLevel, colorString: string): string | undefined {
         if (level === LogLevel.Trace) {
             return undefined;
         }
@@ -30,9 +30,10 @@ export class ConsoleMessageHandler extends MessageHandlerBase {
         if (prefix == null) {
             return undefined;
         }
-        const colorPrefix = this.configuration.UseColors ? colorStart : "";
+        const colorStart = this.configuration.UseColors ? colorString : "";
+        const colorEnd = this.configuration.UseColors ? ANSIColorCodes.Reset : "";
 
-        return `${colorPrefix}${prefix}${ANSIColorCodes.Reset}`;
+        return `${colorStart}${prefix}${colorEnd}`;
     }
 
     public HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void {
