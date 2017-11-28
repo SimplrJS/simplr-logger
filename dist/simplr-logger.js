@@ -524,7 +524,7 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorStart) {
+    ConsoleMessageHandler.prototype.resolveLogLevelPrefix = function (level, colorString) {
         if (level === simplr_logger_1.LogLevel.Trace) {
             return undefined;
         }
@@ -532,8 +532,9 @@ var ConsoleMessageHandler = /** @class */ (function (_super) {
         if (prefix == null) {
             return undefined;
         }
-        var colorPrefix = this.configuration.UseColors ? colorStart : "";
-        return "" + colorPrefix + prefix + ansi_color_codes_1.ANSIColorCodes.Reset;
+        var colorStart = this.configuration.UseColors ? colorString : "";
+        var colorEnd = this.configuration.UseColors ? ansi_color_codes_1.ANSIColorCodes.Reset : "";
+        return "" + colorStart + prefix + colorEnd;
     };
     ConsoleMessageHandler.prototype.HandleMessage = function (level, timestamp, messages) {
         var method;
