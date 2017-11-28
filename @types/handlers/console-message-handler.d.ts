@@ -3,7 +3,7 @@ export declare class ConsoleMessageHandler extends MessageHandlerBase {
     constructor(configuration?: Partial<ConsoleMessageHandler.Configuration>);
     private configuration;
     private readonly defaultConfiguration;
-    private resolveLogLevelPrefix(level, colorStart);
+    private resolveLogLevelPrefix(level, colorString);
     HandleMessage(level: LogLevel, timestamp: number, messages: any[]): void;
 }
 export declare namespace ConsoleMessageHandler {
