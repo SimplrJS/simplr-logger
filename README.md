@@ -116,7 +116,7 @@ logger.UpdateConfiguration(builder => builder.SetPrefix("[new prefix]").Build(),
 
 |     Name    | Value | Description                                                                                                                                                                                          |
 |-------------|:-----:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|     None    |   0   | Not used for writing log messages. Specifies that a logging category should not write any messages.                                                                                                  |
+|     None    |   0   | Not used for writing log messages. Specifies that logger should not write any messages.                                                                                                  |
 |   Critical  |   1   | Logs that describe an unrecoverable application or system crash, or a catastrophic failure that requires immediate attention. |                                                                      |
 |    Error    |   2   | Logs that highlight when the current flow of execution is stopped due to a failure. These should indicate a failure in the current activity, not an application-wide failure.                        |
 |   Warning   |   4   | Logs that highlight an abnormal or unexpected event in the application flow, but do not otherwise cause the application execution to stop.                                                           |
